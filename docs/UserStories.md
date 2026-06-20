@@ -45,6 +45,7 @@ This document captures user stories that drive feature development. User stories
 > As a **entrepreneur building a community sustainability app**, I want **generate a brand voice and mission story from a short description of my community** so that **every downstream agent and contributor builds on one consistent, compelling narrative**.
 
 **Implemented in:** Planned
+**User Flow:** FLOW-001
 
 **Status:** Planned
 
@@ -54,6 +55,25 @@ This document captures user stories that drive feature development. User stories
 - [ ] Agent output is Zod-validated structured data consumed by downstream agents
 - [ ] LLM calls run server-side across configured providers (anthropic/openai/xai/google/bedrock); no keys in the client
 - [ ] Generated voice and story render in the wizard UI
+
+---
+
+
+#### US-002: Guided business-idea refinement
+
+> As a **Ticket 500 Entrepreneur**, I want **refine my business idea through a guided problem -> solution -> success interaction before the app is generated** so that **the generated Smart App and story are grounded in a validated idea rather than a vague prompt**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-002
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+- [ ] The flow prompts for the problem being solved for users/customers
+- [ ] The flow prompts for how the application solves that problem
+- [ ] The flow prompts for what success looks like
+- [ ] Each answer is reflected back for confirmation/refinement before proceeding
+- [ ] A confirmed problem/solution/success brief is produced and seeds Voice & Story generation
 
 ---
 
