@@ -77,8 +77,10 @@ Decisions locked in before US-001 implementation. The SA standard for apps/PWAs 
 
 ### UI shell
 
-- **State-driven single page** (no `react-router`): the sidebar swaps the active step via React state (`src/App.tsx`). Steps: Voice & Story (built) · Generate App · Preview · Community Impact (placeholders until their agents exist).
-- Accessibility-first: nav items are `<button>`s with `aria-current="step"`; the active step's panel renders in `<main>`.
+- **State-driven wizard** (no `react-router`): a numbered progress stepper + Back/Next walk the canonical journey pipeline (`src/App.tsx` + `WizardStepper`). Steps: **Ideation → Research → Voice & Story → Generate App → Preview**.
+- **Ideation** (step 1, `IdeationForm`) implements FLOW-002's problem → solution → success prompts; **Next is gated** until all three are answered. The brief seeds the Voice & Story step (`VoiceStoryForm idea={brief}`).
+- Downstream steps (Research, Generate, Preview) show placeholders until their agents exist.
+- Accessibility-first: the stepper is an `<ol aria-label="Progress">` of `<button>`s with `aria-current="step"`; completed steps are navigable, upcoming steps disabled.
 
 ### PWA architecture (`vite-plugin-pwa`)
 

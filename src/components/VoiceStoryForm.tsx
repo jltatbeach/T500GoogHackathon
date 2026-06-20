@@ -2,14 +2,27 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import type { VoiceStoryOutput } from "../agents/schema";
 import { generateVoiceStory } from "../lib/api";
+import type { IdeaBrief } from "./IdeationForm";
 import { StoryResult } from "./StoryResult";
 
+/** Compose a seed description from the Ideation brief, if provided. */
+function seedFromIdea(idea?: IdeaBrief): string {
+	if (!idea || (!idea.problem && !idea.solution && !idea.success)) return "";
+	return [
+		idea.problem && `Problem: ${idea.problem.trim()}`,
+		idea.solution && `Solution: ${idea.solution.trim()}`,
+		idea.success && `Success: ${idea.success.trim()}`,
+	]
+		.filter(Boolean)
+		.join("\n");
+}
+
 /**
- * Voice & Story creation — the landing / first step of the AI workflow.
- * Triggers the VoiceStoryAgent and shows the evolving narrative.
+ * Voice & Story creation — generates the brand voice and Story Engine.
+ * When reached via the wizard, it is seeded by the Ideation brief.
  */
-export function VoiceStoryForm() {
-	const [userInput, setUserInput] = useState("");
+export function VoiceStoryForm({ idea }: { idea?: IdeaBrief }) {
+	const [userInput, setUserInput] = useState(() => seedFromIdea(idea));
 
 	const mutation = useMutation<VoiceStoryOutput, Error, string>({
 		mutationFn: generateVoiceStory,

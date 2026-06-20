@@ -13,25 +13,45 @@ function renderApp() {
 	);
 }
 
-describe("App wizard navigation", () => {
-	it("starts on the Voice & Story step with its form visible", () => {
+async function fillIdeation() {
+	await userEvent.type(screen.getByLabelText(/what problem are you solving/i), "habit drift");
+	await userEvent.type(screen.getByLabelText(/how will your application solve/i), "rewards");
+	await userEvent.type(screen.getByLabelText(/what does success look like/i), "retention");
+}
+
+describe("App wizard", () => {
+	it("starts on the Ideation step with Back disabled", () => {
 		renderApp();
-		expect(screen.getByRole("button", { name: /voice & story/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
-		expect(screen.getByLabelText(/what community are you serving/i)).toBeInTheDocument();
+		expect(screen.getByRole("button", { name: /^back$/i })).toBeDisabled();
 	});
 
-	it("switches the active step when a sidebar item is clicked", async () => {
+	it("gates Next until the problem/solution/success brief is complete", async () => {
 		renderApp();
-		await userEvent.click(screen.getByRole("button", { name: /generate app/i }));
+		const next = screen.getByRole("button", { name: /^next$/i });
+		expect(next).toBeDisabled();
 
-		expect(screen.getByRole("button", { name: /generate app/i })).toHaveAttribute(
+		await fillIdeation();
+		expect(next).toBeEnabled();
+	});
+
+	it("advances to the next step and Back returns", async () => {
+		renderApp();
+		await fillIdeation();
+		await userEvent.click(screen.getByRole("button", { name: /^next$/i }));
+
+		expect(screen.getByRole("button", { name: /research/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
-		// The Voice & Story form is no longer rendered once another step is active.
-		expect(screen.queryByLabelText(/what community are you serving/i)).not.toBeInTheDocument();
+
+		await userEvent.click(screen.getByRole("button", { name: /^back$/i }));
+		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
+			"aria-current",
+			"step",
+		);
 	});
 });
