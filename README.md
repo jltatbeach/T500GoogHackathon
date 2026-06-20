@@ -56,17 +56,18 @@ flowchart LR
 ```
 T500GoogHackathon/
 ├── README.md                # This file
-├── SmartAppPlan.md          # Overall hackathon plan and AI-workflow flow
-├── VoiceStoryAgent.md       # Voice & Story agent spec + LangGraph state schema (Option A)
-├── UILayout.md              # UI layout and component structure (Option B)
-├── 3MinuteDemoScript.md     # 3-minute demo script (Option C)
 ├── CLAUDE.md                # AI-assistant guidance (single source of truth)
 ├── AGENTS.md                # Condensed guidance (Codex/Copilot/Cursor)
 ├── GEMINI.md                # Gemini CLI pointer to CLAUDE.md
 ├── SovereignLicense.md      # Sovereign Source License (SSL) v0.3
-└── docs/                    # Stigmergic task tracking
-    ├── ToDos.md  UserStories.md  User-Flows.md
-    ├── Backlog.md  CompletedTasks.md  roadmap.md
+└── docs/
+    ├── SmartAppPlan.md      # Overall hackathon plan and AI-workflow flow
+    ├── VoiceStoryAgent.md   # Voice & Story agent spec + LangGraph state schema (Option A)
+    ├── 3MinuteDemoScript.md # 3-minute demo script (Option C)
+    ├── designs/
+    │   └── UILayout.md      # UI layout and component structure (Option B)
+    ├── ToDos.md  UserStories.md  User-Flows.md       # Stigmergic task tracking
+    └── Backlog.md  CompletedTasks.md  roadmap.md
 ```
 
 ## Getting Started
@@ -91,13 +92,13 @@ Provider API keys (e.g. `ANTHROPIC_API_KEY`) live in environment variables only 
 3. **1:40–2:30** — Run the full multi-agent workflow; preview the Health Clean app; submit a contribution and see it rewarded.
 4. **2:30–3:00** — Close on the contribution-reward business model, future smart-contract / ZK integration, and the deployed link.
 
-See [3MinuteDemoScript.md](./3MinuteDemoScript.md) for the full script.
+See [docs/3MinuteDemoScript.md](./docs/3MinuteDemoScript.md) for the full script.
 
 ## Documentation
 
-- [SmartAppPlan.md](./SmartAppPlan.md) — plan, architecture, and gaps vs. existing Smart Assets approaches
-- [VoiceStoryAgent.md](./VoiceStoryAgent.md) — agent spec, state schema, and prompt template
-- [UILayout.md](./UILayout.md) — screens, components, and styling
+- [docs/SmartAppPlan.md](./docs/SmartAppPlan.md) — plan, architecture, and gaps vs. existing Smart Assets approaches
+- [docs/VoiceStoryAgent.md](./docs/VoiceStoryAgent.md) — agent spec, state schema, and prompt template
+- [docs/designs/UILayout.md](./docs/designs/UILayout.md) — screens, components, and styling
 - [CLAUDE.md](./CLAUDE.md) — guidance for AI coding assistants (the canonical project reference)
 
 ## Contributing

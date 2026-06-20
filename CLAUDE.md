@@ -113,11 +113,11 @@ This is a hackathon project (GDG Newport Beach Google I/O Extended). Scope const
 
 ```
 T500GoogHackathon/
-├── SmartAppPlan.md          # Overall hackathon plan and AI-workflow flow
-├── VoiceStoryAgent.md       # Voice & Story agent spec + LangGraph state schema (Option A)
-├── UILayout.md              # UI layout and component structure (Option B)
-├── 3MinuteDemoScript.md     # 3-minute demo script (Option C)
-├── docs/                    # Stigmergic task tracking (harmonized)
+├── docs/                    # Planning docs + stigmergic task tracking (harmonized)
+│   ├── SmartAppPlan.md      # Overall hackathon plan and AI-workflow flow
+│   ├── VoiceStoryAgent.md   # Voice & Story agent spec + LangGraph state schema (Option A)
+│   ├── 3MinuteDemoScript.md # 3-minute demo script (Option C)
+│   ├── designs/UILayout.md  # UI layout and component structure (Option B)
 │   ├── ToDos.md
 │   ├── UserStories.md
 │   ├── User-Flows.md
@@ -348,10 +348,10 @@ This project is licensed under the **Sovereign Source License (SSL) v0.3** — s
 **Canonical license:** [SovereignLicense](https://gitlab.com/smart-assets.io/SovereignLicense)
 
 ## References
-- **Plan**: [SmartAppPlan.md](./SmartAppPlan.md)
-- **Voice & Story Agent spec**: [VoiceStoryAgent.md](./VoiceStoryAgent.md)
-- **UI Layout**: [UILayout.md](./UILayout.md)
-- **Demo Script**: [3MinuteDemoScript.md](./3MinuteDemoScript.md)
+- **Plan**: [docs/SmartAppPlan.md](./docs/SmartAppPlan.md)
+- **Voice & Story Agent spec**: [docs/VoiceStoryAgent.md](./docs/VoiceStoryAgent.md)
+- **UI Layout**: [docs/designs/UILayout.md](./docs/designs/UILayout.md)
+- **Demo Script**: [docs/3MinuteDemoScript.md](./docs/3MinuteDemoScript.md)
 - **User Stories**: [docs/UserStories.md](./docs/UserStories.md)
 - **Task Tracking**: [docs/ToDos.md](./docs/ToDos.md)
 - **GitLab Organization**: https://gitlab.com/smart-assets.io/
