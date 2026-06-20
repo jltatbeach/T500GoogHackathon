@@ -1,0 +1,20 @@
+{
+	// Biome config — fast all-in-one lint + format (replaces ESLint + Prettier).
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"organizeImports": { "enabled": true },
+	"files": {
+		"ignore": ["dist", "node_modules", "coverage", ".vercel", ".claude"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 100
+	},
+	"linter": {
+		"enabled": true,
+		"rules": { "recommended": true }
+	},
+	"javascript": {
+		"formatter": { "quoteStyle": "double" }
+	}
+}
