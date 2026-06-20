@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { VoiceStoryOutputSchema, VoiceStoryRequestSchema } from "./schema";
+import {
+	ResearchBriefSchema,
+	ResearchRequestSchema,
+	VoiceStoryOutputSchema,
+	VoiceStoryRequestSchema,
+} from "./schema";
 
 describe("VoiceStoryRequestSchema", () => {
 	it("rejects empty input", () => {
@@ -63,6 +68,45 @@ describe("VoiceStoryOutputSchema", () => {
 		const result = VoiceStoryOutputSchema.safeParse({
 			voiceProfile: { tone: "x", personality: "y", coreValues: [] },
 			targetCommunity: "z",
+		});
+		expect(result.success).toBe(false);
+	});
+});
+
+describe("ResearchRequestSchema", () => {
+	it("requires a complete idea brief", () => {
+		expect(
+			ResearchRequestSchema.safeParse({ idea: { problem: "", solution: "x", success: "y" } })
+				.success,
+		).toBe(false);
+	});
+
+	it("accepts a complete idea brief", () => {
+		const parsed = ResearchRequestSchema.safeParse({
+			idea: { problem: "habit drift", solution: "rewards", success: "retention" },
+		});
+		expect(parsed.success).toBe(true);
+	});
+});
+
+describe("ResearchBriefSchema", () => {
+	it("validates a complete research brief", () => {
+		const result = ResearchBriefSchema.safeParse({
+			audience: "Health-conscious urban families",
+			marketGap: "Habit apps lack community accountability",
+			comparables: ["Strava", "Noom"],
+			rewardOpportunities: ["Impact points for shared meals"],
+			assumptions: ["People will share habits publicly"],
+		});
+		expect(result.success).toBe(true);
+	});
+
+	it("rejects a brief missing the audience", () => {
+		const result = ResearchBriefSchema.safeParse({
+			marketGap: "x",
+			comparables: [],
+			rewardOpportunities: [],
+			assumptions: [],
 		});
 		expect(result.success).toBe(false);
 	});

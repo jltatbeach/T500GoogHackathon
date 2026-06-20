@@ -73,6 +73,30 @@ export const VoiceStoryRequestSchema = z.object({
 	userInput: z.string().min(1, "Describe the community app you want to build"),
 });
 
+// --- Research agent (FLOW-003) ---------------------------------------------
+
+/** The confirmed idea brief from Ideation (FLOW-002) — input to research. */
+export const IdeaBriefSchema = z.object({
+	problem: z.string().min(1, "Describe the problem you're solving"),
+	solution: z.string().min(1, "Describe how the app solves it"),
+	success: z.string().min(1, "Describe what success looks like"),
+});
+
+/** Emulated Agentic Research output (FLOW-003). */
+export const ResearchBriefSchema = z.object({
+	audience: z.string().describe("Primary users/customers and a signal they need this"),
+	marketGap: z.string().describe("The market gap or comparable pattern"),
+	comparables: z.array(z.string()).describe("Comparable products or approaches"),
+	rewardOpportunities: z
+		.array(z.string())
+		.describe("Ways community contributions could earn impact points (never tokens)"),
+	assumptions: z.array(z.string()).describe("Key assumptions to validate"),
+});
+
+export const ResearchRequestSchema = z.object({
+	idea: IdeaBriefSchema,
+});
+
 export type VoiceProfile = z.infer<typeof VoiceProfileSchema>;
 export type StoryNarrative = z.infer<typeof StoryNarrativeSchema>;
 export type ABT = z.infer<typeof ABTSchema>;
@@ -81,3 +105,6 @@ export type Metaphor = z.infer<typeof MetaphorSchema>;
 export type StoryEngine = z.infer<typeof StoryEngineSchema>;
 export type VoiceStoryOutput = z.infer<typeof VoiceStoryOutputSchema>;
 export type VoiceStoryRequest = z.infer<typeof VoiceStoryRequestSchema>;
+export type IdeaBriefInput = z.infer<typeof IdeaBriefSchema>;
+export type ResearchBrief = z.infer<typeof ResearchBriefSchema>;
+export type ResearchRequest = z.infer<typeof ResearchRequestSchema>;

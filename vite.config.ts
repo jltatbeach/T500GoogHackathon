@@ -21,20 +21,28 @@ function devApi(): Plugin {
 				if (process.env[key] === undefined) process.env[key] = env[key];
 			}
 
-			server.middlewares.use("/api/voice-story", async (req, res, next) => {
-				if (req.method !== "POST") return next();
-				try {
-					const body = await readJson(req);
-					const { handleVoiceStory } = await server.ssrLoadModule("/src/server/handler.ts");
-					const result = await handleVoiceStory(body);
-					res.setHeader("Content-Type", "application/json");
-					res.end(JSON.stringify(result));
-				} catch (err) {
-					res.statusCode = 400;
-					res.setHeader("Content-Type", "application/json");
-					res.end(JSON.stringify({ error: err instanceof Error ? err.message : "Bad request" }));
-				}
-			});
+			// Each route maps to an exported handler in src/server/handler.ts.
+			const routes: Record<string, string> = {
+				"/api/voice-story": "handleVoiceStory",
+				"/api/research": "handleResearch",
+			};
+			for (const [path, fnName] of Object.entries(routes)) {
+				server.middlewares.use(path, async (req, res, next) => {
+					if (req.method !== "POST") return next();
+					try {
+						const body = await readJson(req);
+						const mod = await server.ssrLoadModule("/src/server/handler.ts");
+						const handle = mod[fnName] as (body: unknown) => Promise<unknown>;
+						const result = await handle(body);
+						res.setHeader("Content-Type", "application/json");
+						res.end(JSON.stringify(result));
+					} catch (err) {
+						res.statusCode = 400;
+						res.setHeader("Content-Type", "application/json");
+						res.end(JSON.stringify({ error: err instanceof Error ? err.message : "Bad request" }));
+					}
+				});
+			}
 		},
 	};
 }
