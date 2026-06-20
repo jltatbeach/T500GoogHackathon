@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ideation - Smart Community App Generator</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#ad3309",
+                    "primary": "#0b6b2c",
+                    "on-background": "#1b1c19",
+                    "tertiary-container": "#587d6e",
+                    "background": "#fbf9f4",
+                    "on-primary-fixed": "#002108",
+                    "on-primary-container": "#fafff5",
+                    "tertiary-fixed": "#c4ebd9",
+                    "tertiary-fixed-dim": "#a8cfbd",
+                    "outline-variant": "#bfcabb",
+                    "surface-variant": "#e4e2dd",
+                    "on-tertiary-fixed-variant": "#2a4d40",
+                    "secondary-fixed-dim": "#ffb5a0",
+                    "primary-fixed": "#9ef7a6",
+                    "inverse-surface": "#30312e",
+                    "secondary-fixed": "#ffdbd1",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c19",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#0f6d2d",
+                    "tertiary": "#406455",
+                    "surface-bright": "#fbf9f4",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#2f8542",
+                    "surface-container-high": "#eae8e3",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#00531e",
+                    "surface-container": "#f0eee9",
+                    "primary-fixed-dim": "#83da8c",
+                    "surface-container-low": "#f5f3ee",
+                    "on-secondary-fixed": "#3b0a00",
+                    "inverse-primary": "#83da8c",
+                    "on-secondary-container": "#641700",
+                    "surface-dim": "#dbdad5",
+                    "surface": "#fbf9f4",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-tertiary-fixed": "#002116",
+                    "on-secondary-fixed-variant": "#862200",
+                    "on-surface-variant": "#3f493e",
+                    "surface-container-highest": "#e4e2dd",
+                    "secondary-container": "#ff6e43",
+                    "outline": "#707a6e",
+                    "on-tertiary-container": "#fafffa"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-width": "280px",
+                    "container-padding": "24px",
+                    "gutter": "20px",
+                    "unit": "8px",
+                    "max-content-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Outfit"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Outfit"],
+                    "label-sm": ["Inter"],
+                    "display": ["Outfit"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .botanical-shadow {
+            box-shadow: 0 10px 40px -10px rgba(47, 53, 47, 0.08);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        body {
+            background-color: #fbf9f4;
+            color: #1b1c19;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-background">
+<!-- Persistent SideNavBar -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 bg-surface dark:bg-surface-dim border-r border-outline-variant flex flex-col p-unit z-50">
+<div class="mb-10 px-4 pt-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Smart Community</h1>
+<p class="font-label-sm text-label-sm text-outline">Regenerative App Builder</p>
+</div>
+<nav class="flex-1 space-y-2 px-2">
+<!-- Active Tab: Ideation -->
+<div class="flex items-center gap-3 px-4 py-3 bg-tertiary-container text-on-tertiary-container rounded-full font-bold border-l-4 border-primary cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-label-md text-label-md">Ideation</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+<span class="font-label-md text-label-md">Market Validation</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-label-md text-label-md">Brand Story</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-md text-label-md">Business Summary</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="font-label-md text-label-md">App Generation</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span class="font-label-md text-label-md">App Preview</span>
+</div>
+</nav>
+<div class="mt-auto px-4 pb-8 space-y-4">
+<button class="w-full py-3 bg-primary text-on-primary rounded-full font-label-md text-label-md shadow-lg hover:shadow-xl transition-all active:scale-95">
+                Save Progress
+            </button>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a smiling community manager in a soft, natural daylight setting, conveying a sense of warmth, trust, and professional care. The background is a blurred office filled with indoor plants, following a modern regenerative aesthetic with soft greens and cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgvl3GdSk6ts1PafEIZ9tk7dtSxVUsdwW-sPeEG2mX3I3_AC6Mze2HQvXJz_ds3HCIaykHlYSmvk3uPHXnBgFlZ2c9MXThVcn2yrTth-QKgx6dfWPqQ4hX6v-IJiu0UsgLyD0nA_td9pfCmKbNs9d5iJ7ou8ScTEOwcnT0Dr04eqiq1KBKGho8ChCrj5BeBVtbrkjAJo_m_6FBxgusa1_gb4zqRppuRzWRq-GdRvu5LJS9F60RiZhbGKLk2REWtj61I3c_Iiz35fo"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex River</p>
+<p class="font-label-sm text-label-sm text-outline">Project Lead</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-container-padding ml-[280px] w-[calc(100%-280px)] h-16 bg-surface-bright dark:bg-surface-container-low shadow-sm fixed top-0 z-40 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed">Smart Community App Generator</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-label-md text-label-md">Support</span>
+</div>
+<div class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-md text-label-md">Account</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-24 pb-12 px-container-padding flex flex-col items-center min-h-[calc(100vh-64px)]">
+<div class="w-full max-w-max-content-width">
+<!-- Bento-style Hero Section -->
+<div class="grid grid-cols-12 gap-gutter mb-16">
+<!-- Welcome Title -->
+<div class="col-span-12 lg:col-span-8 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span>
+                        Phase 1: Foundation
+                    </div>
+<h2 class="font-display text-display text-on-background leading-tight">
+                        Let's bring your community <br/>
+<span class="text-primary italic">idea to life.</span>
+</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                        Every regenerative project starts with a single seed. Today, we're defining the soil where your community will grow. Take a breath, and tell us about your vision.
+                    </p>
+</div>
+<!-- Progress Card -->
+<div class="col-span-12 lg:col-span-4 bg-white p-8 rounded-3xl botanical-shadow border border-outline-variant/30 flex flex-col justify-center items-center text-center relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
+<div class="mb-6 relative">
+<svg class="w-24 h-24 transform -rotate-90">
+<circle class="text-surface-container-high" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="167.5" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-display text-headline-md text-primary">
+                            1/3
+                        </div>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1">Ideation Progress</h4>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Step 1 of 6 Overall</p>
+</div>
+</div>
+<!-- Question Area -->
+<div class="w-full max-w-3xl mx-auto space-y-12">
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold font-headline-md">
+                            1
+                        </div>
+<h3 class="font-headline-lg text-headline-lg text-on-background">What problem are you solving for your users?</h3>
+</div>
+<div class="relative group">
+<textarea class="w-full min-h-[240px] p-8 rounded-[32px] border-2 border-outline-variant bg-white text-body-lg text-on-surface focus:border-primary focus:ring-0 transition-all duration-300 botanical-shadow group-hover:border-primary/40 resize-none outline-none" placeholder="Describe the friction points your community faces. Is it access to resources, lack of coordination, or a need for shared governance?"></textarea>
+<div class="absolute bottom-6 right-8 flex items-center gap-2 text-outline font-label-sm text-label-sm bg-white px-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit_note">edit_note</span>
+                            Focus on the human element
+                        </div>
+</div>
+</div>
+<!-- Navigation Controls -->
+<div class="flex items-center justify-between pt-8">
+<button class="flex items-center gap-2 text-outline hover:text-primary transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform" data-icon="arrow_back">arrow_back</span>
+<span class="font-label-md text-label-md">Back to Overview</span>
+</button>
+<button class="flex items-center gap-3 px-10 py-5 bg-primary text-on-primary rounded-full font-headline-md text-headline-md shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-95">
+                        Continue
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Atmospheric Card -->
+<div class="mt-24 bg-surface-container-low rounded-[40px] p-10 flex flex-col md:flex-row items-center gap-10 border border-outline-variant/20">
+<div class="w-full md:w-1/3 aspect-video rounded-3xl overflow-hidden shadow-inner">
+<img class="w-full h-full object-cover" data-alt="A serene, high-definition macro photograph of a green sprout emerging from rich, dark fertile soil. The lighting is golden-hour sunlight filtering through forest leaves, creating a soft bokeh effect. The overall mood is hopeful, quiet, and deeply connected to nature, reflecting regenerative growth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBloM-4KbCJrqrKR3hEzogHd7N_oSwxtlROxMGd5hUOGa7ddDo7huleDK6rU9l7oS7UVLUg1OZPEwrY1JQT1peo4xrIYFlWd_FRqmYwjXNMot_0PBoPXSJ3RM4g9KG5dkrlTMKW5zzcGKsWDP2no3FL4GaajhQ_cE_Bm9fnW2w6lhI20ZXH4wcZUVXdRL6HkcF9gwxRi5Y_9lAKOu_Oqgri-cpAWRk3QQ_gSxaXb9PTw1yMW2MKNaV-nztkF0udbdo96psdTtMCMKE"/>
+</div>
+<div class="flex-1 space-y-4">
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined" data-icon="spa">spa</span>
+                        Design Tip
+                    </div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Start with the 'Why'</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        The most successful regenerative communities aren't built on features, but on shared purpose. By clearly identifying the problem, you make it easier for others to join your mission and grow alongside you.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex justify-between items-center py-4 px-container-padding ml-[280px] w-[calc(100%-280px)] bg-surface-container-low dark:bg-surface-container-lowest border-t border-outline-variant/10">
+<p class="font-label-sm text-label-sm text-outline">© 2024 Smart Community. Grounded in regeneration.</p>
+<div class="flex gap-6">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Documentation</a>
+</div>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.querySelector('textarea');
+            textarea.addEventListener('focus', () => {
+                textarea.parentElement.classList.add('scale-[1.01]');
+            });
+            textarea.addEventListener('blur', () => {
+                textarea.parentElement.classList.remove('scale-[1.01]');
+            });
+
+            // Smooth entrance for elements
+            const elements = document.querySelectorAll('main > div > div');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `all 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`;
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 50);
+            });
+        });
+    </script>
+</body></html>

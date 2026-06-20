@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Business Summary - Smart Community</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "error": "#ba1a1a",
+                "secondary": "#ad3309",
+                "primary": "#0b6b2c",
+                "on-background": "#1b1c19",
+                "tertiary-container": "#587d6e",
+                "background": "#fbf9f4",
+                "on-primary-fixed": "#002108",
+                "on-primary-container": "#fafff5",
+                "tertiary-fixed": "#c4ebd9",
+                "tertiary-fixed-dim": "#a8cfbd",
+                "outline-variant": "#bfcabb",
+                "surface-variant": "#e4e2dd",
+                "on-tertiary-fixed-variant": "#2a4d40",
+                "secondary-fixed-dim": "#ffb5a0",
+                "primary-fixed": "#9ef7a6",
+                "inverse-surface": "#30312e",
+                "secondary-fixed": "#ffdbd1",
+                "surface-container-lowest": "#ffffff",
+                "on-surface": "#1b1c19",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#0f6d2d",
+                "tertiary": "#406455",
+                "surface-bright": "#fbf9f4",
+                "on-primary": "#ffffff",
+                "primary-container": "#2f8542",
+                "surface-container-high": "#eae8e3",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-secondary": "#ffffff",
+                "on-error-container": "#93000a",
+                "on-primary-fixed-variant": "#00531e",
+                "surface-container": "#f0eee9",
+                "primary-fixed-dim": "#83da8c",
+                "surface-container-low": "#f5f3ee",
+                "on-secondary-fixed": "#3b0a00",
+                "inverse-primary": "#83da8c",
+                "on-secondary-container": "#641700",
+                "surface-dim": "#dbdad5",
+                "surface": "#fbf9f4",
+                "inverse-on-surface": "#f2f1ec",
+                "on-tertiary-fixed": "#002116",
+                "on-secondary-fixed-variant": "#862200",
+                "on-surface-variant": "#3f493e",
+                "surface-container-highest": "#e4e2dd",
+                "secondary-container": "#ff6e43",
+                "outline": "#707a6e",
+                "on-tertiary-container": "#fafffa"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sidebar-width": "280px",
+                "container-padding": "24px",
+                "gutter": "20px",
+                "unit": "8px",
+                "max-content-width": "1200px"
+            },
+            "fontFamily": {
+                "headline-md": ["Outfit"],
+                "label-md": ["Inter"],
+                "headline-lg-mobile": ["Outfit"],
+                "body-md": ["Inter"],
+                "headline-lg": ["Outfit"],
+                "label-sm": ["Inter"],
+                "display": ["Outfit"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .botanical-shadow {
+            box-shadow: 0 20px 40px -10px rgba(47, 53, 47, 0.08);
+        }
+        body {
+            background-color: #fbf9f4;
+            color: #1b1c19;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bfcabb;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Left Sidebar (SideNavBar) -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 bg-surface dark:bg-surface-dim flex flex-col p-unit border-r border-outline-variant z-50">
+<div class="mb-10 px-4 pt-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Smart Community</h1>
+<p class="font-label-md text-label-md opacity-70">Regenerative App Builder</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Nav Items mapped from JSON -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-md">Ideation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-md">Market Validation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-md">Brand Story</span>
+</a>
+<!-- Active State: Business Summary -->
+<a class="flex items-center gap-3 px-4 py-3 bg-tertiary-container text-on-tertiary-container rounded-full font-bold border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md">Business Summary</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-label-md">App Generation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">visibility</span>
+<span class="font-label-md">App Preview</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pb-6">
+<button class="w-full py-3 bg-primary text-on-primary rounded-full font-label-md cursor-pointer transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span>
+            Save Progress
+        </button>
+</div>
+</aside>
+<!-- Top Navigation (TopNavBar) -->
+<header class="flex justify-between items-center px-container-padding ml-[280px] w-[calc(100%-280px)] h-16 bg-surface-bright dark:bg-surface-container-low shadow-sm sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed">Smart Community App Generator</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">help_outline</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">account_circle</span>
+</div>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-full font-label-md hover:bg-primary transition-all">Save Progress</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] min-h-screen p-container-padding pb-32">
+<div class="max-w-[1000px] mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div class="space-y-2">
+<span class="text-primary font-label-md uppercase tracking-wider">Step 4 of 6</span>
+<h1 class="font-display text-display text-on-background">Business Summary</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">A comprehensive blueprint of your community's digital ecosystem, finalized and ready for structural generation.</p>
+</div>
+<div class="flex items-center gap-4 bg-white p-6 rounded-xl border border-outline-variant botanical-shadow">
+<div class="h-16 w-16 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-4xl" style="font-variation-settings: 'FILL' 1">eco</span>
+</div>
+<div>
+<div class="font-label-sm text-outline uppercase tracking-tight">App Name</div>
+<div class="font-headline-md text-headline-md text-on-surface">EcoLink</div>
+</div>
+<div class="h-12 w-px bg-outline-variant mx-2"></div>
+<div>
+<div class="font-label-sm text-outline uppercase tracking-tight">Viability Score</div>
+<div class="flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-primary font-bold">94%</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Document Layout -->
+<div class="space-y-gutter">
+<!-- Hero Summary Panel -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="md:col-span-2 glass-panel p-10 rounded-2xl border border-outline-variant botanical-shadow transition-all hover:translate-y-[-4px]">
+<div class="flex items-center gap-2 text-primary mb-4">
+<span class="material-symbols-outlined">target</span>
+<span class="font-label-md">Mission Statement</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 italic leading-snug">"To cultivate resilient local food networks through regenerative finance and decentralized peer-to-peer distribution."</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-1.5 bg-surface-container-high rounded-full font-label-sm text-on-surface-variant">Regenerative Agriculture</span>
+<span class="px-4 py-1.5 bg-surface-container-high rounded-full font-label-sm text-on-surface-variant">Zero Waste</span>
+<span class="px-4 py-1.5 bg-surface-container-high rounded-full font-label-sm text-on-surface-variant">Local Economy</span>
+</div>
+</div>
+<div class="bg-white p-10 rounded-2xl border border-outline-variant botanical-shadow flex flex-col">
+<div class="flex items-center gap-2 text-secondary mb-4">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md">Target Community</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mb-2">Urban Permaculturalists</div>
+<p class="text-on-surface-variant mb-6">Aged 24-45, city dwellers with balcony gardens or community plots seeking sustainable supply chains.</p>
+<div class="mt-auto">
+<div class="w-full h-32 rounded-lg bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of lush urban garden greens on a sunlit rooftop balcony, soft focus background of city skyline, warm golden hour lighting, clean and modern aesthetic matching a regenerative finance brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3fq_ILWg50FNyBnVEpuTiW5sQDUo93lPgq6bY_deyv2iGh57tMX7LakXeuhwtR41-d7c4IQ-wdEICd1sqBQdmFwOfHP2R9vW2u2se9fyi4zfdQYe1Wgdq1Jx9BJ1JCcysTSPAu_9oW1Obc7eZ1GY_i2IGHhXzTI6u12lYNosax2mwW8DVeslbnBMoPr_CcImvTnSp0cPHg5_S8EKxh23Zlvvte9_vg32L9pzS2GhGqBAJDc-z3zCuZQUzq2hlYgkjn6qqcYOCjP0"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Problem/Solution Divider -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Problem -->
+<div class="p-8 rounded-2xl border border-outline-variant bg-white flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error">report_problem</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md uppercase text-outline mb-2">The Problem</h4>
+<p class="text-on-surface text-lg leading-relaxed">Centralized grocery chains create massive carbon footprints and disconnect urban consumers from the biological reality of their food sources.</p>
+</div>
+</div>
+<!-- Solution -->
+<div class="p-8 rounded-2xl border border-outline-variant bg-white flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md uppercase text-outline mb-2">Solution Vision</h4>
+<p class="text-on-surface text-lg leading-relaxed">A hyperlocal exchange protocol that gamifies regeneration, rewarding participants for carbon sequestration and biodiversity contributions.</p>
+</div>
+</div>
+</div>
+<!-- Market Verdict & Brand Story -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-gutter">
+<!-- Market Verdict -->
+<div class="md:col-span-3 p-10 rounded-2xl bg-surface-container border border-outline-variant">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline-md text-headline-md">Market Verdict</h3>
+<span class="px-3 py-1 bg-primary text-on-primary rounded font-label-sm">High Growth Potential</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[88%] rounded-full"></div>
+</div>
+<span class="font-label-md whitespace-nowrap">88% Product-Market Fit</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[72%] rounded-full"></div>
+</div>
+<span class="font-label-md whitespace-nowrap">72% Retention Forecast</span>
+</div>
+</div>
+<p class="mt-8 text-on-surface-variant leading-relaxed">User testing shows strong desire for 'Proof of Harvest' NFTs and community-backed credit systems. The local-first approach mitigates global logistics risks.</p>
+</div>
+<!-- Brand Story Highlights -->
+<div class="md:col-span-2 p-10 rounded-2xl bg-primary text-on-primary botanical-shadow relative overflow-hidden group">
+<!-- Atmospheric effect -->
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary-container rounded-full blur-3xl opacity-20 group-hover:scale-110 transition-transform duration-1000"></div>
+<h3 class="font-headline-md text-headline-md mb-6 relative z-10">Brand Story Highlights</h3>
+<ul class="space-y-4 relative z-10">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span class="font-body-md italic">"From Soil to Screen: Transparency in every byte."</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span class="font-body-md">Tone: Nurturing, Transparent, and Grounded.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span class="font-body-md">Visual: Botanical Shadows &amp; Earth Tones.</span>
+</li>
+</ul>
+<div class="mt-8 relative z-10">
+<div class="w-full aspect-video rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-4">
+<span class="text-primary-fixed font-bold text-center">Brand Identity Preview</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Final Generation Card -->
+<div class="mt-16 p-12 rounded-[2rem] bg-surface-container-highest border border-outline-variant flex flex-col items-center text-center botanical-shadow">
+<div class="w-20 h-20 bg-primary-fixed rounded-3xl flex items-center justify-center mb-8 rotate-3 shadow-lg">
+<span class="material-symbols-outlined text-on-primary-fixed text-5xl">bolt</span>
+</div>
+<h2 class="font-display text-[40px] text-on-surface mb-4 leading-tight">Ready to Breathe Life into EcoLink?</h2>
+<p class="text-on-surface-variant max-w-xl text-lg mb-12">All logic, branding, and market data have been synthesized. Our generative engine will now craft the full application architecture.</p>
+<button class="px-12 py-5 bg-primary text-on-primary rounded-full font-headline-md shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3 active:scale-95 group">
+<span>Generate App Architecture</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="mt-6 font-label-sm text-outline">Estimated generation time: 45 seconds</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="flex justify-between items-center py-4 px-container-padding ml-[280px] w-[calc(100%-280px)] bg-surface-container-low dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex items-center gap-6">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Smart Community</span>
+<span class="text-secondary dark:text-secondary-fixed font-label-sm text-label-sm opacity-80">© 2024 Smart Community. Grounded in regeneration.</span>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-outline font-label-sm hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-outline font-label-sm hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="text-outline font-label-sm hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="#">Documentation</a>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('click', (e) => {
+            const circle = document.createElement('div');
+            circle.classList.add('ripple');
+            circle.style.left = `${e.clientX}px`;
+            circle.style.top = `${e.clientY}px`;
+            document.body.appendChild(circle);
+            setTimeout(() => circle.remove(), 1000);
+        });
+    });
+</script>
+<style>
+    .ripple {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: rgba(11, 107, 44, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: ripple-effect 0.8s ease-out;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    @keyframes ripple-effect {
+        from { width: 0; height: 0; opacity: 0.5; }
+        to { width: 100px; height: 100px; opacity: 0; }
+    }
+</style>
+</body></html>
