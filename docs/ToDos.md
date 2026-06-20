@@ -84,13 +84,14 @@ tasks:
     status: complete
     claimed_by: claude-session
     completed_date: 2026-06-20
-    unit_tests: [src/agents/schema.test.ts]
+    unit_tests: [src/agents/schema.test.ts, src/agents/research.live.test.ts]
     acceptance:
       - "Add ResearchBriefSchema (audience, marketGap, comparables[], rewardOpportunities[], assumptions[]) to src/agents/schema.ts; client-safe (zod only)."
       - "Add src/agents/research.ts: runResearch(idea) node using createChatModel().withStructuredOutput(ResearchBriefSchema)."
       - "Expose via src/server/handler.ts (handleResearch), api/research.ts, and a /api/research dev-middleware route in vite.config.ts."
       - "POST /api/research returns a validated ResearchBrief from an IdeaBrief; returns 400 on invalid input or missing provider credentials."
       - "Vitest covers the schema; no provider keys appear in client code."
+      - "Live back-end test (src/agents/research.live.test.ts) exercises a real LLM call; opt-in via `pnpm test:live` (RUN_LIVE_AGENT_TESTS=1), auto-selects an available provider, and is skipped in the default/pre-push run."
 
   - id: TASK-008-2
     title: "Voice & Story research context (FLOW-001)"
@@ -126,6 +127,16 @@ tasks:
       - "Every endpoint reuses providerCredentialsPresent and the shared handler error contract."
       - "Optionally promote SmartAppState into a shared multi-node graph (idea -> research -> voiceStory -> generateApp); per-phase endpoints still work."
       - "pnpm lint, typecheck, test, and build all pass; CLAUDE.md/SmartAppPlan.md note the new endpoints."
+
+  - id: TASK-008-6
+    title: "Add DeepSeek v4 as a provider option"
+    status: pending
+    acceptance:
+      - "Add a 'deepseek' provider to src/agents/llm.ts (ProviderName, DEFAULT_MODELS, createChatModel, providerCredentialsPresent) using DeepSeek's OpenAI-compatible API (ChatOpenAI with configuration.baseURL = https://api.deepseek.com) and a DeepSeek v4 model id."
+      - "Read DEEPSEEK_API_KEY from env; document it in .env.example alongside the other providers."
+      - "Reference the BountyForge wiring example (https://www.bountyforge.app/#try) for the integration approach."
+      - "withStructuredOutput works for the Research and Voice & Story agents under deepseek (verify via pnpm test:live with LLM_PROVIDER=deepseek)."
+      - "No keys in client code; pnpm lint, typecheck, test, build all pass."
 ---
 ```
 

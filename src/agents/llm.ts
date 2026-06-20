@@ -54,6 +54,12 @@ export function createChatModel(provider: ProviderName = resolveProvider()): Bas
 				model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODELS.anthropic,
 				apiKey: process.env.ANTHROPIC_API_KEY,
 				maxTokens: Number(process.env.ANTHROPIC_MAX_TOKENS ?? 16384),
+				// @langchain/anthropic always sends temperature AND top_p for opus-4-5
+				// (it only omits the top_p=-1 sentinel for opus-4-1/sonnet-4-5/haiku-4-5).
+				// opus-4-5 rejects top_p=-1 and rejects temperature+top_p together, so we
+				// send a valid top_p (1 = no nucleus filtering) and omit temperature (null).
+				topP: 1,
+				temperature: null,
 			});
 		case "openai":
 			return new ChatOpenAI({
