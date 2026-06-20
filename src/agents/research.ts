@@ -50,9 +50,9 @@ async function researchNode(
 }
 
 const graph = new StateGraph(ResearchState)
-	.addNode("research", researchNode)
-	.addEdge(START, "research")
-	.addEdge("research", END)
+	.addNode("analyze", researchNode)
+	.addEdge(START, "analyze")
+	.addEdge("analyze", END)
 	.compile();
 
 /** Run the emulated research agent and return its structured brief. */

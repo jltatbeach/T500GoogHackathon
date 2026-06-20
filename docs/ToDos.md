@@ -70,18 +70,21 @@ mr_status:
 ---
 epic_id: EPIC-008
 title: "Agentic backend — server-side agent slices (Research, Generate, Reward)"
-status: pending
+status: in_progress
 priority: p0
 user_story: US-003
 user_flow: FLOW-003
 blocked_by: []          # Intentionally unblocked — this is the next implementation step.
 created_at: 2026-06-20
-claimed_by: null
-claimed_at: null
+claimed_by: claude-session
+claimed_at: 2026-06-20
 tasks:
   - id: TASK-008-1
     title: "Research agent slice (FLOW-003)"
-    status: pending
+    status: complete
+    claimed_by: claude-session
+    completed_date: 2026-06-20
+    unit_tests: [src/agents/schema.test.ts]
     acceptance:
       - "Add ResearchBriefSchema (audience, marketGap, comparables[], rewardOpportunities[], assumptions[]) to src/agents/schema.ts; client-safe (zod only)."
       - "Add src/agents/research.ts: runResearch(idea) node using createChatModel().withStructuredOutput(ResearchBriefSchema)."
@@ -537,6 +540,17 @@ tasks:
       - "pnpm lint, typecheck, test, and build pass."
       - "PWA preview is tested with pnpm build && pnpm preview."
       - "MR/PR tracking frontmatter is updated when ready."
+
+  - id: TASK-007-5
+    title: "Deploy to Vercel Hobby with Vite setup"
+    status: pending
+    blocked_by: [TASK-007-4]
+    acceptance:
+      - "Vercel project is linked to the user's Hobby account; no account-specific IDs or secrets are committed."
+      - "Vercel uses the Vite framework preset with pnpm build and dist output (vercel.json/project settings stay aligned)."
+      - "Server-side Vercel Functions under api/ work for /api/voice-story and /api/research with required LLM env vars configured in Vercel project settings."
+      - "SPA/PWA routing works on the deployed URL, and API routes remain network-only/not cached by the service worker."
+      - "Live deployed demo is smoke-tested, including Clean Health preview and expected provider-credential fallback behavior if keys are absent."
 ---
 ```
 
@@ -544,8 +558,8 @@ tasks:
 
 **Scope:**
 
-- Included: docs sync, test specs, demo script, and final validation.
-- Excluded: production deployment troubleshooting beyond surfacing blockers.
+- Included: docs sync, test specs, demo script, final validation, and Vercel Hobby deployment readiness.
+- Excluded: paid Vercel team features or production infrastructure beyond the hackathon Hobby-account deployment.
 
 ---
 
