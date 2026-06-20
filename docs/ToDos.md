@@ -70,7 +70,7 @@ mr_status:
 ---
 epic_id: EPIC-001
 title: "Initial project wireframes"
-status: pending
+status: in_progress
 priority: p0
 user_story: US-001
 blocked_by: []
@@ -80,7 +80,12 @@ claimed_at: null
 tasks:
   - id: TASK-001-1
     title: "Define user workflows and UI problem framing"
-    status: pending
+    status: complete
+    claimed_by: pi-session
+    claimed_at: 2026-06-20T22:30:40Z
+    completed_date: 2026-06-20
+    unit_tests: [docs/User-Flows.md, docs/designs/InitialWireframes.md]
+    completion_gaps: []
     acceptance:
       - "Document primary user workflows in docs/User-Flows.md before drafting wireframes."
       - "Each workflow identifies persona, problem trigger, goal, ordered steps, key UI interactions, and success outcome."

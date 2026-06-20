@@ -6,6 +6,20 @@ An AI-workflow-driven generator that helps entrepreneurs spin up **community-pow
 
 > **Hackathon project** — GDG Newport Beach, Google I/O Extended (June 2026). Built standalone, deployable to Vercel from GitHub, with a ≤ 3-minute demo.
 
+## Quick Start
+
+Requires **Node 20+** and **pnpm 11+**.
+
+```bash
+git clone https://github.com/jltatbeach/T500GoogHackathon.git
+cd T500GoogHackathon
+pnpm install                 # installs deps + git hooks
+cp .env.example .env         # add one LLM key (GOOGLE_API_KEY by default)
+pnpm dev                     # → http://localhost:5173
+```
+
+Then walk the wizard: **Ideation** (problem → solution → success) → **Voice & Story**, which generates the brand voice + Story Engine. The Ideation step works without a key; generating a story needs the provider key in `.env`.
+
 ## Why
 
 - Embodies the Smart Assets **ReFi vision** — regenerative, outcome-tied, community-financed.
@@ -48,8 +62,8 @@ flowchart LR
 
 ## UI Overview
 
-- **Sidebar navigation**: Voice & Story (workflow start) · Generate App · Preview · Community Impact. A **state-driven single-page wizard** (no router) swaps the active step; downstream steps show placeholders until their agents are built.
-- **Wizard flow**: Story → Design → Generate → Review/Contribute → Iterate.
+- **Wizard interface** (`src/App.tsx` + `WizardStepper`): a numbered progress stepper with Back/Next walks the journey pipeline — **Ideation → Research → Voice & Story → Generate App → Preview**. State-driven (no router); downstream steps show placeholders until their agents are built.
+- **Ideation gates progression**: the problem → solution → success brief must be complete before Next; it then seeds the Voice & Story step.
 - **Generated app preview** (Health Clean): planned tabbed Home/Dashboard · Contribute · My Rewards · Community, with a working contribution form and reward preview.
 - **Key components**: `VoiceStoryForm`, `StoryResult` (built); `ContributionCard`, `ImpactDashboard`, `GeneratedAppPreview` (planned).
 
