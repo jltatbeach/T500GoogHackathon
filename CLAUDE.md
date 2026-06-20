@@ -105,7 +105,7 @@ Build a **Smart Community App Generator** — an AI-workflow-driven tool that he
 1. **Voice & Story Agent** (first step) — Guided AI-assisted creation of brand voice, mission narrative, and evangelization story that sets the "voice" for the entire app and future contributions.
 2. **Design & Feature Agents** — Generate app structure, contribution flows, and reward mechanics consistent with the story and ReFi principles.
 3. **Review & Contribution Loop** — AI-assisted review; contributions (data/reviews) to the generated app are rewarded, mirroring the business model.
-4. **Live Preview & Iteration** — Runnable mini-app (e.g. "Health Clean") with a working contribution → reward loop.
+4. **Live Preview & Iteration** — Runnable mini-app (e.g. "Clean Health") with a working contribution → reward loop.
 
 This is a hackathon project (GDG Newport Beach Google I/O Extended). Scope constraints: standalone, runnable + deployable (GitHub → Vercel), demo ≤ 3 minutes, with UI placeholders highlighting future smart-contract / ZK capability.
 

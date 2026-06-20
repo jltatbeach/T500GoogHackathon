@@ -22,16 +22,24 @@ async function fillIdeation() {
 describe("App wizard", () => {
 	it("starts on the Ideation step with Back disabled", () => {
 		renderApp();
-		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /ideation problem/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
 		expect(screen.getByRole("button", { name: /^back$/i })).toBeDisabled();
 	});
 
+	it("defaults the background switch to system", () => {
+		renderApp();
+		expect(screen.getByRole("button", { name: /^system$/i })).toHaveAttribute(
+			"aria-pressed",
+			"true",
+		);
+	});
+
 	it("gates Next until the problem/solution/success brief is complete", async () => {
 		renderApp();
-		const next = screen.getByRole("button", { name: /^next$/i });
+		const next = screen.getByRole("button", { name: /^next: research$/i });
 		expect(next).toBeDisabled();
 
 		await fillIdeation();
@@ -41,15 +49,15 @@ describe("App wizard", () => {
 	it("advances to the next step and Back returns", async () => {
 		renderApp();
 		await fillIdeation();
-		await userEvent.click(screen.getByRole("button", { name: /^next$/i }));
+		await userEvent.click(screen.getByRole("button", { name: /^next: research$/i }));
 
-		expect(screen.getByRole("button", { name: /research/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /research emulated/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
 
 		await userEvent.click(screen.getByRole("button", { name: /^back$/i }));
-		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /ideation problem/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);

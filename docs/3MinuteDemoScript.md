@@ -14,7 +14,7 @@ Live demo:
 
 ### 1:40 â€“ 2:30 â€” AI Workflow Generation & Live Preview (50s)
 - Trigger the full multi-agent LangGraph workflow (following smart-assets.io AI development approach).
-- Show the Health Clean Smart App preview with contribution â†’ reward in action.
+- Show the Clean Health Smart App preview with contribution â†’ reward in action.
 - Demonstrate a review/contribution: Submit feedback â†’ it is processed as a rewarded contribution in the workflow.
 
 ### 2:30 â€“ 3:00 â€” Close & Vision (30s)

@@ -21,6 +21,7 @@ TEMPLATE USAGE INSTRUCTIONS:
 This document captures user stories that drive feature development. User stories are reverse-engineered from completed epics and updated as new features are planned.
 
 **Document Structure**
+
 - Active stories: This file (`docs/UserStories.md`)
 - Implementation tracking: `docs/ToDos.md` (epics and tasks)
 - Completed work: `docs/CompletedTasks.md`
@@ -39,7 +40,6 @@ This document captures user stories that drive feature development. User stories
 
 ---
 
-
 #### US-001: Voice & Story generation engine
 
 > As a **entrepreneur building a community sustainability app**, I want **generate a brand voice and mission story from a short description of my community** so that **every downstream agent and contributor builds on one consistent, compelling narrative**.
@@ -50,6 +50,7 @@ This document captures user stories that drive feature development. User stories
 **Status:** Planned
 
 **Acceptance Criteria:**
+
 - [ ] Voice & Story agent returns a Voice Profile (tone, personality, core values)
 - [ ] Output includes a Story Engine: ABT pitch, Story Spine, Story Statement, Proverb, and Metaphor
 - [ ] Agent output is Zod-validated structured data consumed by downstream agents
@@ -57,7 +58,6 @@ This document captures user stories that drive feature development. User stories
 - [ ] Generated voice and story render in the wizard UI
 
 ---
-
 
 #### US-002: Guided business-idea refinement
 
@@ -69,6 +69,7 @@ This document captures user stories that drive feature development. User stories
 **Status:** Planned
 
 **Acceptance Criteria:**
+
 - [ ] The flow prompts for the problem being solved for users/customers
 - [ ] The flow prompts for how the application solves that problem
 - [ ] The flow prompts for what success looks like
@@ -81,7 +82,97 @@ This document captures user stories that drive feature development. User stories
 
 Stories below are candidates for future epics. Move to "Completed Stories" when implemented.
 
-<!-- Add planned user stories here -->
+#### US-003: Emulated Agentic Research brief
+
+> As a **Ticket 500 Entrepreneur**, I want **see a research-backed summary of my confirmed idea before story generation** so that **the generated story and app feel grounded in audience, market, and reward-loop assumptions even before live research agents are connected**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-003
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+
+- [ ] Research is gated until the Ideation brief is complete
+- [ ] Research output is clearly labeled as emulated/demo data
+- [ ] Output includes audience signal, comparable pattern, reward opportunity, and assumptions
+- [ ] Research context is available to seed Voice & Story generation
+
+---
+
+#### US-004: Clean Health app generation trace
+
+> As a **Ticket 500 Entrepreneur**, I want **watch the system turn my story into a Clean Health app map and impact-point mechanics** so that **I can understand how the agent workflow creates a coherent product from the story**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-004
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+
+- [ ] Generate App is gated until Voice & Story output exists
+- [ ] Workflow trace shows design, feature, review, and preview-builder stages
+- [ ] Generated artifacts include app map, component list, and impact-point rules
+- [ ] Preview step unlocks only after a generated app configuration exists
+
+---
+
+#### US-005: Clean Health preview
+
+> As a **Ticket 500 Entrepreneur**, I want **preview the generated Clean Health app with Home, Contribute, Rewards, and Community views** so that **I can demonstrate a tangible app experience instead of only describing generated artifacts**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-005
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+
+- [ ] Clean Health preview is gated until app generation completes
+- [ ] Preview includes Home, Contribute, Rewards, and Community tabs
+- [ ] Preview is responsive across desktop demo, tablet, and mobile layouts
+- [ ] Preview makes the path to submit a contribution obvious
+
+---
+
+#### US-006: Simulated contribution and impact points
+
+> As a **simulated Clean Health community member**, I want **submit a contribution and see impact points credited** so that **the demo proves the contribution -> reward -> community impact loop**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-006
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+
+- [ ] Contribution form is clearly labeled as simulated community member mode
+- [ ] Submit is disabled until required contribution text is present
+- [ ] Reward preview and confirmation use impact points only
+- [ ] Community impact metrics update after submission
+- [ ] Future verification is mentioned subtly without token-claim language
+
+---
+
+#### US-007: Responsive workflow shell
+
+> As a **Ticket 500 Entrepreneur**, I want **a responsive side-navbar workflow with system/light/dark background control** so that **the demo stays legible and aligned with the approved wireframes on desktop, tablet, and mobile**.
+
+**Implemented in:** Planned
+**User Flow:** FLOW-002
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+
+- [ ] Desktop uses a persistent side navbar
+- [ ] Mobile exposes workflow navigation as a drawer
+- [ ] Background mode defaults to System with Light and Dark overrides
+- [ ] Light mode uses a soft light-blue background with sufficient contrast
+- [ ] Navigation gating follows the workflow prerequisites
+
+---
 
 ---
 
@@ -118,6 +209,7 @@ User stories capture the **why** (user need and benefit). Epics capture the **wh
 | Acceptance Criteria | Definition of done | In user story |
 
 **Workflow:**
+
 1. Identify user need -> Create user story
 2. Design solution -> Create epic with tasks
 3. Implement -> Work through tasks via `/nextTask` and `/implement`

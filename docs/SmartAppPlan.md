@@ -14,7 +14,7 @@ Build a **Smart Community App Generator** that helps entrepreneurs quickly creat
 1. **Voice & Story Agent** (first step) â€” Guided AI-assisted creation of brand voice, mission narrative, and evangelization story (sets the "voice" for the entire app and future contributions).
 2. **Design & Feature Agents** â€” AI agents generate app structure, contribution flows, and reward mechanics consistent with the story and ReFi principles.
 3. **Review & Contribution Loop** â€” Built-in step for AI-assisted review; contributions (data/reviews) to the generated app are rewarded, mirroring the business model.
-4. **Live Preview & Iteration** â€” Runnable mini-app (e.g. Health Clean) with working contribution â†’ reward loop. Users/contributors can iterate via AI workflows.
+4. **Live Preview & Iteration** â€” Runnable mini-app (e.g. Clean Health) with working contribution â†’ reward loop. Users/contributors can iterate via AI workflows.
 
 **Constraints**:
 - Standalone for hackathon.
@@ -79,7 +79,7 @@ See the attached option files for detailed implementation guidance.
 **Main Demo Flow (3 minutes)**:
 1. Introduce problem + tool.
 2. Live Voice & Story creation.
-3. Generate & preview Health Clean app with contribution/reward in action.
+3. Generate & preview Clean Health app with contribution/reward in action.
 4. Highlight agent orchestration + future extensibility.
 
 ---

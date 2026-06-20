@@ -41,7 +41,7 @@ flowchart LR
 1. **Voice & Story Agent** *(first step)* — Guided AI-assisted creation of brand voice, mission narrative, and a **Story Engine** built on proven storytelling frameworks: an [ABT](https://abtframework.com) pitch (Randy Olson), a Story Spine (Kenn Adams), a "gist with a twist" Story Statement, a Proverb, and a central Metaphor (Ron Ploof). Outputs Zod-validated structured data consumed by every later agent. Initial user input is treated as a rewardable *contribution*.
 2. **Design & Feature Agents** — Generate app structure, contribution flows, and reward mechanics consistent with the story and ReFi principles.
 3. **Review & Contribution Loop** — AI-assisted review; contributions (data/reviews) are scored and rewarded, mirroring the business model.
-4. **Live Preview & Iteration** — A runnable mini-app (the "Health Clean" example) with a working contribution → reward loop and placeholders for future smart-contract / ZK features.
+4. **Live Preview & Iteration** — A runnable mini-app (the "Clean Health" example) with a working contribution → reward loop and placeholders for future smart-contract / ZK features.
 
 ## Stack
 
@@ -62,10 +62,11 @@ flowchart LR
 
 ## UI Overview
 
-- **Wizard interface** (`src/App.tsx` + `WizardStepper`): a numbered progress stepper with Back/Next walks the journey pipeline — **Ideation → Research → Voice & Story → Generate App → Preview**. State-driven (no router); downstream steps show placeholders until their agents are built.
-- **Ideation gates progression**: the problem → solution → success brief must be complete before Next; it then seeds the Voice & Story step.
-- **Generated app preview** (Health Clean): planned tabbed Home/Dashboard · Contribute · My Rewards · Community, with a working contribution form and reward preview.
-- **Key components**: `VoiceStoryForm`, `StoryResult` (built); `ContributionCard`, `ImpactDashboard`, `GeneratedAppPreview` (planned).
+- **Responsive side-navbar interface** (`src/App.tsx` + `WorkflowSideNav`): a persistent desktop side nav and mobile workflow drawer walk the journey pipeline — **Ideation → Research → Voice & Story → Generate App → Preview**. State-driven (no router); gated steps unlock as prerequisites are met.
+- **Background mode switch**: defaults to **System**, with Light/Dark overrides in the workflow nav.
+- **Ideation gates progression**: the problem → solution → success brief must be complete before Research; it then seeds the Voice & Story step.
+- **Generated app preview** (Clean Health): tabbed Home · Contribute · Rewards · Community preview with a simulated community-member contribution form and impact-point reward confirmation.
+- **Key components**: `WorkflowSideNav`, `IdeationForm`, `ResearchStep`, `VoiceStoryForm`, `StoryResult`, `GenerationStep`, and `CleanHealthPreview`.
 
 ### Progressive Web App
 
@@ -138,7 +139,7 @@ The LangGraph agents target the same providers wired into `/multi-review`, selec
 
 1. **0:00–0:40** — Introduce the problem and the generator.
 2. **0:40–1:40** — Live Voice & Story creation; show the agent and generated Voice Profile + Narrative.
-3. **1:40–2:30** — Run the full multi-agent workflow; preview the Health Clean app; submit a contribution and see it rewarded.
+3. **1:40–2:30** — Run the full multi-agent workflow; preview the Clean Health app; submit a contribution and see it rewarded.
 4. **2:30–3:00** — Close on the contribution-reward business model, future smart-contract / ZK integration, and the deployed link.
 
 See [docs/3MinuteDemoScript.md](./docs/3MinuteDemoScript.md) for the full script.

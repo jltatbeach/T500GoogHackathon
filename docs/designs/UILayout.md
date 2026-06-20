@@ -27,7 +27,7 @@ loop.
 1. Define the user's community, problem, and desired impact.
 2. Generate the Voice Profile, Story Narrative, and Story Engine.
 3. Map the story into app structure, reward mechanics, and contribution flows.
-4. Preview the generated Smart App, starting with the Health Clean example.
+4. Preview the generated Smart App, starting with the Clean Health example.
 5. Submit a community contribution and show the reward confirmation.
 6. Summarize community impact and invite iteration on the generated app.
 
@@ -49,7 +49,7 @@ loop.
 - Visual LangGraph execution trace showing the AI workflow steps (highly recommended for demo â€” shows agent orchestration per smart-assets.io approach).
 - Progress indicators for each agent, with review/contribution hooks.
 
-### 3. Generated App Preview (Health Clean Example)
+### 3. Generated App Preview (Clean Health Example)
 
 - Tabbed view: Home/Dashboard | Contribute | My Rewards | Community
 - Working contribution form (submit review/data â†’ see reward).
