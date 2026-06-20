@@ -10,7 +10,7 @@ AI-workflow-driven **Smart Community App Generator** (GDG Newport Beach Google I
 
 **Core flow:** Voice & Story Agent (first step) → Design & Feature Agents → Review & Contribution Loop → Live Preview & Iteration — all orchestrated as LangGraph.js StateGraph nodes.
 
-**Stack:** TypeScript (strict) + Next.js (App Router) + LangGraph.js + TailwindCSS/shadcn + Zod + Biome + Vitest, deployed on Vercel. Optional uv/Python hybrid services via FastAPI.
+**Stack:** TypeScript (strict) + Vite + React + LangGraph.js (server-side) + TailwindCSS + Zod + Biome + Vitest, managed with pnpm, deployed on Vercel (server logic via Functions in `api/`). Optional uv/Python hybrid services via FastAPI.
 
 ## Git Interaction
 

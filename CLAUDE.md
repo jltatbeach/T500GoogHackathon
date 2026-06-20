@@ -94,7 +94,7 @@ next_steps:
 
 - **Problem:** Entrepreneurs need a fast way to spin up community-powered sustainability / healthy-living apps with built-in contribution-reward loops.
 - **Ecosystem fit:** Embodies the Smart Assets ReFi vision (regenerative, outcome-tied, community-financed) and extends the BountyForge coordination/incentive mindset into an AI-orchestrated Smart App builder. The build process itself follows the smart-assets.io AI development workflows (agent-orchestrated, iterative, contribution-driven).
-- **Key technologies:** TypeScript + Next.js (App Router) frontend, LangGraph.js multi-agent orchestration, TailwindCSS, Vercel deployment.
+- **Key technologies:** TypeScript + Vite + React frontend, LangGraph.js multi-agent orchestration (server-side), TailwindCSS, Vercel deployment.
 
 ## Project Overview
 
@@ -113,19 +113,25 @@ This is a hackathon project (GDG Newport Beach Google I/O Extended). Scope const
 
 ```
 T500GoogHackathon/
+├── index.html, package.json, vite.config.ts, tsconfig.json, biome.jsonc,
+│   tailwind.config.ts, postcss.config.js, vercel.json, .env.example
+├── api/
+│   └── voice-story.ts       # Vercel Function — runs the workflow server-side
+├── src/
+│   ├── main.tsx, App.tsx     # React entry + wizard shell
+│   ├── agents/              # schema.ts (Zod), llm.ts (provider factory), voiceStory.ts (LangGraph)
+│   ├── server/handler.ts    # Shared server entrypoint (dev middleware + Vercel fn)
+│   ├── components/          # VoiceStoryForm, StoryResult (+ *.test.tsx)
+│   ├── lib/api.ts           # Client fetch wrapper
+│   └── test/setup.ts        # Vitest + jsdom setup
 ├── docs/                    # Planning docs + stigmergic task tracking (harmonized)
 │   ├── SmartAppPlan.md      # Overall hackathon plan and AI-workflow flow
 │   ├── VoiceStoryAgent.md   # Voice & Story agent spec + LangGraph state schema (Option A)
 │   ├── 3MinuteDemoScript.md # 3-minute demo script (Option C)
 │   ├── designs/UILayout.md  # UI layout and component structure (Option B)
-│   ├── ToDos.md
-│   ├── UserStories.md
-│   ├── User-Flows.md
-│   ├── Backlog.md
-│   ├── CompletedTasks.md
-│   └── roadmap.md
-├── CLAUDE.md / AGENTS.md / GEMINI.md
-└── .gitignore
+│   ├── ToDos.md, UserStories.md, User-Flows.md
+│   └── Backlog.md, CompletedTasks.md, roadmap.md
+└── CLAUDE.md / AGENTS.md / GEMINI.md / README.md / SovereignLicense.md
 ```
 
 ## Commands
@@ -148,24 +154,30 @@ See [Git Interaction Policy](../SA/top-level-gitlab-profile/docs/common/git-inte
 
 ### Project-Specific Commands
 
-> Scaffolding pending. Once the Next.js app is initialized these become the standard commands:
+Vite + React + TypeScript app, managed with **pnpm** (do not use npm — see `pnpm-workspace.yaml`).
 
 ```bash
 # Install dependencies
-npm install        # or pnpm install
+pnpm install
 
-# Development server
-npm run dev
+# Development server (+ local /api middleware for the agent endpoint)
+pnpm dev
 
-# Build
-npm run build
+# Build (typecheck + vite build)
+pnpm build
 
 # Lint / format (Biome)
-npx biome check --write .
+pnpm lint        # check
+pnpm lint:fix    # apply fixes
+
+# Typecheck only
+pnpm typecheck
 
 # Test (Vitest)
-npm run test
+pnpm test
 ```
+
+LLM calls run **server-side only** (`api/voice-story.ts` in prod, the Vite dev middleware locally) so provider keys never reach the client bundle.
 
 ### Configuration File Conventions
 
@@ -248,13 +260,14 @@ architecture:
 
   technology_stack:
     Language/Runtime: TypeScript (strict) + Node.js
-    Framework: Next.js (App Router); Vite + React for lighter prototypes
-    Styling: TailwindCSS (+ shadcn/ui)
-    Orchestration: LangGraph.js
+    Framework: Vite + React (SPA); server logic via Vercel Functions in api/
+    Styling: TailwindCSS
+    Orchestration: LangGraph.js (server-side)
     Validation: Zod (agent structured outputs)
-    State: React state + TanStack Query / Zustand
+    State: React state + TanStack Query
     Lint/Format: Biome
-    Test: Vitest
+    Test: Vitest (+ Testing Library, jsdom)
+    Package manager: pnpm
     Deployment: Vercel (GitHub-driven)
 ```
 
@@ -280,7 +293,7 @@ architecture:
 **For reference (GitLab):**
 [Testing Guidelines](https://gitlab.com/smart-assets.io/gitlab-profile/-/blob/master/docs/common/testing-guidelines.md)
 
-**Test Framework**: Vitest (pairs with Vite/Next.js)
+**Test Framework**: Vitest (+ Testing Library, jsdom)
 
 **Test Types**:
 - Unit tests for LangGraph agent nodes and Zod schemas
@@ -323,22 +336,27 @@ React UI tests should prove user-observable DOM structure and state, not inciden
 ## Development Environment
 
 ### Requirements
-- Node.js 20+
-- npm or pnpm
+- Node.js 20+ (developed on 24)
+- pnpm 11+
 - (Optional) Python 3.11+ with uv, if hybrid services are added
 
 ### Setup
 ```bash
 cd T500GoogHackathon
-npm install
-cp .env.example .env   # add provider API keys
-npm run dev
+pnpm install
+cp .env.example .env   # add a provider API key
+pnpm dev
 ```
 
 ### Environment Variables
+Provider env vars mirror the `/multi-review` wiring (see `.env.example`):
 ```bash
-ANTHROPIC_API_KEY=...   # LLM provider key (example; do not commit)
-# Add others (Google, etc.) as agents require
+LLM_PROVIDER=google                       # anthropic | openai | xai | google | bedrock
+GOOGLE_API_KEY=...   # or GEMINI_API_KEY  # default provider
+ANTHROPIC_API_KEY=...                     # ANTHROPIC_MODEL optional
+OPENAI_API_KEY=...
+XAI_API_KEY=...      # or GROK_API_KEY
+AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=... AWS_REGION=us-east-1   # Bedrock
 ```
 
 ## License

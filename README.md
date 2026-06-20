@@ -34,11 +34,12 @@ flowchart LR
 | Layer | Choice |
 |-------|--------|
 | Language / Runtime | TypeScript (strict) + Node.js |
-| Framework | Next.js (App Router); Vite + React for lighter prototypes |
-| Agent Orchestration | LangGraph.js (`StateGraph`) |
+| Framework | Vite + React (SPA); server logic via Vercel Functions in `api/` |
+| Agent Orchestration | LangGraph.js (`StateGraph`, server-side) |
 | Validation | Zod (agent structured outputs) |
-| Styling | TailwindCSS + shadcn/ui (clean, nature-inspired ReFi aesthetic) |
-| State | React state + TanStack Query / Zustand |
+| Styling | TailwindCSS (clean, nature-inspired ReFi aesthetic) |
+| State | React state + TanStack Query |
+| Package manager | pnpm |
 | Lint / Format | Biome |
 | Testing | Vitest |
 | Deployment | Vercel (one-command from GitHub) |
@@ -55,35 +56,48 @@ flowchart LR
 
 ```
 T500GoogHackathon/
-├── README.md                # This file
-├── CLAUDE.md                # AI-assistant guidance (single source of truth)
-├── AGENTS.md                # Condensed guidance (Codex/Copilot/Cursor)
-├── GEMINI.md                # Gemini CLI pointer to CLAUDE.md
-├── SovereignLicense.md      # Sovereign Source License (SSL) v0.3
+├── index.html               # Vite entry
+├── package.json             # pnpm scripts + deps
+├── vite.config.ts           # Vite + React, dev API middleware, Vitest config
+├── tsconfig.json            # TypeScript (strict)
+├── biome.jsonc              # Lint + format
+├── tailwind.config.ts       # ReFi theme
+├── vercel.json              # Vercel build config
+├── .env.example             # Provider keys (mirrors /multi-review wiring)
+├── api/
+│   └── voice-story.ts       # Vercel Function — runs the workflow server-side
+├── src/
+│   ├── main.tsx  App.tsx    # React entry + wizard shell (sidebar nav)
+│   ├── agents/              # schema.ts (Zod), llm.ts (provider factory), voiceStory.ts (LangGraph)
+│   ├── server/handler.ts    # Shared server entrypoint (dev + prod)
+│   ├── components/          # VoiceStoryForm, StoryResult (+ tests)
+│   └── lib/api.ts           # Client fetch wrapper
+├── README.md  CLAUDE.md  AGENTS.md  GEMINI.md  SovereignLicense.md
 └── docs/
     ├── SmartAppPlan.md      # Overall hackathon plan and AI-workflow flow
     ├── VoiceStoryAgent.md   # Voice & Story agent spec + LangGraph state schema (Option A)
     ├── 3MinuteDemoScript.md # 3-minute demo script (Option C)
-    ├── designs/
-    │   └── UILayout.md      # UI layout and component structure (Option B)
+    ├── designs/UILayout.md  # UI layout and component structure (Option B)
     ├── ToDos.md  UserStories.md  User-Flows.md       # Stigmergic task tracking
     └── Backlog.md  CompletedTasks.md  roadmap.md
 ```
 
 ## Getting Started
 
-> The Next.js app scaffold is pending; these are the intended commands once `package.json` exists.
-
 ```bash
-npm install            # or pnpm install
-cp .env.example .env   # add LLM provider API keys (never commit)
-npm run dev            # start the dev server
-npm run build          # production build
-npx biome check --write .   # lint + format
-npm run test           # Vitest
+pnpm install
+cp .env.example .env   # add an LLM provider key (never commit); defaults to LLM_PROVIDER=google
+pnpm dev               # Vite dev server + local /api middleware
+pnpm build             # typecheck + production build
+pnpm lint              # Biome lint + format check
+pnpm test              # Vitest
 ```
 
-Provider API keys (e.g. `ANTHROPIC_API_KEY`) live in environment variables only — see `.env.example`.
+`pnpm dev` runs the React app and a dev-only `/api/voice-story` middleware so the workflow works locally without `vercel dev`; in production that path is served by the Vercel Function in `api/`. LLM calls run **server-side only** — provider keys live in environment variables (see `.env.example`), never in the client bundle.
+
+### LLM providers
+
+The LangGraph agents target the same providers wired into `/multi-review`, selected via `LLM_PROVIDER` (`anthropic` | `openai` | `xai` | `google` | `bedrock`). Each uses its standard key env var (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `XAI_API_KEY`/`GROK_API_KEY`, `GEMINI_API_KEY`/`GOOGLE_API_KEY`, AWS creds for Bedrock).
 
 ## Demo (≤ 3 minutes)
 
