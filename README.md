@@ -35,6 +35,7 @@ flowchart LR
 |-------|--------|
 | Language / Runtime | TypeScript (strict) + Node.js |
 | Framework | Vite + React (SPA); server logic via Vercel Functions in `api/` |
+| PWA | `vite-plugin-pwa` (installable app shell, `autoUpdate` service worker) |
 | Agent Orchestration | LangGraph.js (`StateGraph`, server-side) |
 | Validation | Zod (agent structured outputs) |
 | Styling | TailwindCSS (clean, nature-inspired ReFi aesthetic) |
@@ -47,10 +48,20 @@ flowchart LR
 
 ## UI Overview
 
-- **Sidebar navigation**: Voice & Story (workflow start) · Generate App (agent orchestration) · Preview · Community Impact & Contributions.
-- **Wizard flow**: Story → Design → Generate → Review/Contribute → Iterate, with a live LangGraph execution trace for the demo.
-- **Generated app preview** (Health Clean): tabbed Home/Dashboard · Contribute · My Rewards · Community, with a working contribution form and reward preview.
-- **Key components**: `VoiceStoryForm`, `ContributionCard`, `ImpactDashboard`, `GeneratedAppPreview`.
+- **Sidebar navigation**: Voice & Story (workflow start) · Generate App · Preview · Community Impact. A **state-driven single-page wizard** (no router) swaps the active step; downstream steps show placeholders until their agents are built.
+- **Wizard flow**: Story → Design → Generate → Review/Contribute → Iterate.
+- **Generated app preview** (Health Clean): planned tabbed Home/Dashboard · Contribute · My Rewards · Community, with a working contribution form and reward preview.
+- **Key components**: `VoiceStoryForm`, `StoryResult` (built); `ContributionCard`, `ImpactDashboard`, `GeneratedAppPreview` (planned).
+
+### Progressive Web App
+
+The app is an installable PWA via [`vite-plugin-pwa`](https://vite-pwa-org.netlify.app/) (the SA standard, as in `@satchel/pwa`):
+
+- **App-shell precache** — the build (HTML/JS/CSS + icons) is cached for offline launch; the `/api/*` LLM endpoint is `NetworkOnly` (generation always needs the network).
+- **`autoUpdate`** — a new service worker activates on the next load.
+- **Manifest + icons** — `manifest.webmanifest` with 192/512 + maskable icons (ReFi green `#2f8542`), generated from `public/favicon.svg`.
+
+The service worker is build-only (disabled in `pnpm dev` so it doesn't shadow the dev `/api` middleware). Test installability with `pnpm build && pnpm preview`.
 
 ## Repository Structure
 
@@ -64,6 +75,7 @@ T500GoogHackathon/
 ├── tailwind.config.ts       # ReFi theme
 ├── vercel.json              # Vercel build config
 ├── .env.example             # Provider keys (mirrors /multi-review wiring)
+├── public/                  # PWA assets — favicon.svg/.ico, apple-touch-icon, icons/ (192/512/maskable)
 ├── api/
 │   └── voice-story.ts       # Vercel Function — runs the workflow server-side
 ├── src/

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Smart Community App Generator">
+  <rect width="512" height="512" rx="96" fill="#2f8542"/>
+  <!-- sprout: stem + two leaves, in ReFi white/light green -->
+  <path d="M256 392 V232" stroke="#f0f9f1" stroke-width="26" stroke-linecap="round"/>
+  <path d="M256 248 C 200 248, 150 210, 138 150 C 206 150, 252 188, 256 248 Z" fill="#dcf0de"/>
+  <path d="M256 248 C 312 248, 362 210, 374 150 C 306 150, 260 188, 256 248 Z" fill="#86cf8f"/>
+  <circle cx="256" cy="150" r="30" fill="#f0f9f1"/>
+</svg>

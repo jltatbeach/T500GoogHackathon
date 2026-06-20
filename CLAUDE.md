@@ -115,11 +115,12 @@ This is a hackathon project (GDG Newport Beach Google I/O Extended). Scope const
 T500GoogHackathon/
 ├── index.html, package.json, vite.config.ts, tsconfig.json, biome.jsonc,
 │   tailwind.config.ts, postcss.config.js, vercel.json, .env.example
+├── public/                  # PWA assets (favicon, apple-touch-icon, icons/ 192/512/maskable)
 ├── api/
 │   └── voice-story.ts       # Vercel Function — runs the workflow server-side
 ├── src/
-│   ├── main.tsx, App.tsx     # React entry + wizard shell
-│   ├── agents/              # schema.ts (Zod), llm.ts (provider factory), voiceStory.ts (LangGraph)
+│   ├── main.tsx, App.tsx     # React entry + state-driven wizard shell
+│   ├── agents/              # schema.ts (Zod), llm.ts (provider factory), voiceStory.ts (LangGraph), storyFrameworks.ts
 │   ├── server/handler.ts    # Shared server entrypoint (dev middleware + Vercel fn)
 │   ├── components/          # VoiceStoryForm, StoryResult (+ *.test.tsx)
 │   ├── lib/api.ts           # Client fetch wrapper
@@ -266,6 +267,7 @@ architecture:
   technology_stack:
     Language/Runtime: TypeScript (strict) + Node.js
     Framework: Vite + React (SPA); server logic via Vercel Functions in api/
+    PWA: vite-plugin-pwa (installable app shell, autoUpdate SW; /api is NetworkOnly)
     Styling: TailwindCSS
     Orchestration: LangGraph.js (server-side)
     Validation: Zod (agent structured outputs)

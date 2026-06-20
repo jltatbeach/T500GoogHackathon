@@ -1,7 +1,7 @@
 ---
 doc_type: todos
 version: "1.0"
-last_updated: [DATE]
+last_updated: 2026-06-20
 mr_status:
   ready: false
   target_branch: main
@@ -24,6 +24,7 @@ TEMPLATE USAGE INSTRUCTIONS:
 This document tracks implementation work through **epics** (logical groupings of related tasks).
 
 **Document Structure**
+
 - Active work: This file (`docs/ToDos.md`)
 - User stories: `docs/UserStories.md`
 - Completed work: `docs/CompletedTasks.md`
@@ -63,44 +64,77 @@ mr_status:
 
 ---
 
-### EPIC-001: [PROJECT_SPECIFIC: Epic Title]
+### EPIC-001: Initial project wireframes
 
 ```yaml
 ---
 epic_id: EPIC-001
-title: "[PROJECT_SPECIFIC: Epic Title]"
-status: pending          # pending | in_progress | blocked | review | complete
-priority: p1             # p0 (critical) | p1 (high) | p2 (medium) | p3 (low)
-user_story: US-XXX       # Link to user story in docs/UserStories.md
-blocked_by: []           # List of blocking epic IDs
-created_at: [DATE]
-claimed_by: null         # Implementer ID: human-{email}, {tool}-session[-{id}], or {team}/{role}
+title: "Initial project wireframes"
+status: pending
+priority: p0
+user_story: US-001
+blocked_by: []
+created_at: 2026-06-20
+claimed_by: null
 claimed_at: null
 tasks:
   - id: TASK-001-1
-    title: "[PROJECT_SPECIFIC: Task 1 title]"
-    status: pending      # pending | in_progress | complete | blocked
+    title: "Define user workflows and UI problem framing"
+    status: pending
     acceptance:
-      - "[PROJECT_SPECIFIC: Acceptance criterion 1]"
-      - "[PROJECT_SPECIFIC: Acceptance criterion 2]"
+      - "Document primary user workflows in docs/User-Flows.md before drafting wireframes."
+      - "Each workflow identifies persona, problem trigger, goal, ordered steps, key UI interactions, and success outcome."
+      - "Add or reference a UI definition section with the user's problem statement, the proposed solution, and the process the UI guides them through."
+      - "Confirm primary demo persona, 3-minute journey, wireframe format, viewport priority, and sample generated app."
 
   - id: TASK-001-2
-    title: "[PROJECT_SPECIFIC: Task 2 title]"
+    title: "Draft low-fidelity wireframes from the user workflows"
     status: pending
-    blocked_by: [TASK-001-1]  # Optional: task dependencies
+    blocked_by: [TASK-001-1]
     acceptance:
-      - "[PROJECT_SPECIFIC: Acceptance criterion 1]"
+      - "Create docs/designs/InitialWireframes.md or an equivalent agreed artifact."
+      - "Use the approved docs/User-Flows.md workflows as the source for screen order and state transitions."
+      - "Show the problem -> solution -> process framing in the first screen or intro panel."
+      - "Cover the current app shell: sidebar workflow navigation and main wizard canvas."
+      - "Cover Voice & Story input, generated Voice Profile, Story Narrative, and Story Engine result states."
+      - "Cover the downstream demo sequence: generation progress, generated app preview, contribution form, reward confirmation, and community impact summary."
+      - "Annotate each wireframe with required components, data states, and demo-timing notes."
+
+  - id: TASK-001-3
+    title: "Review wireframes against project context and prepare implementation handoff"
+    status: pending
+    blocked_by: [TASK-001-2]
+    acceptance:
+      - "Cross-check wireframes against README.md, docs/SmartAppPlan.md, docs/designs/UILayout.md, and docs/3MinuteDemoScript.md."
+      - "Identify any gaps between the current React placeholders and the desired wireframe flow."
+      - "Add a short implementation handoff section listing components/screens to build next."
 ---
 ```
 
-**Context:** [PROJECT_SPECIFIC: Why is this epic needed? What problem does it solve?]
+**Context:** The current React app has a working Voice & Story first step and placeholder downstream screens. Initial wireframes are now the next top priority, but the first step is to define the user workflows and UI problem framing those wireframes must solve. This will align the 3-minute hackathon demo, generated app preview, contribution/reward loop, and community impact story before further UI implementation.
 
 **Scope:**
-- [PROJECT_SPECIFIC: What's included]
-- [PROJECT_SPECIFIC: What's explicitly excluded]
+
+- Included: user workflow definitions in `docs/User-Flows.md` that precede and drive the wireframes.
+- Included: UI definition framing for the user's problem statement, the proposed solution, and the process the product guides them through.
+- Included: low-fidelity wireframes for the full generator journey from Voice & Story through rewarded contribution and community impact.
+- Included: annotations that map wireframe regions to existing or planned components (`VoiceStoryForm`, `StoryResult`, `GeneratedAppPreview`, `ContributionCard`, `ImpactDashboard`).
+- Excluded: production React implementation, high-fidelity visual design, final copywriting, and real smart-contract/ZK integrations.
+
+**Clarifying Questions:**
+
+- Which primary personas and user workflows must be defined before wireframing?
+- What format should the initial wireframes use: Markdown/Mermaid, static images, Figma, or a lightweight HTML prototype?
+- Should the first pass optimize for the live desktop demo, a mobile PWA experience, or both?
+- Should the sample generated app remain **Health Clean**, or should wireframes use a different example community?
+- How visible should future smart-contract/ZK placeholders be in the initial wireframes?
+- Are there any sponsor/judge-facing messages that must appear above the fold during the demo?
 
 **Notes:**
-- [PROJECT_SPECIFIC: Implementation notes, gotchas, references]
+
+- Reference `README.md`, `docs/SmartAppPlan.md`, `docs/designs/UILayout.md`, `docs/User-Flows.md`, and `docs/3MinuteDemoScript.md` before drafting.
+- Do not start wireframes until the workflow, problem statement, solution, and UI process are documented.
+- Keep the design nature-inspired and ReFi-aligned, but prefer wireframe clarity over visual polish for this epic.
 
 ---
 

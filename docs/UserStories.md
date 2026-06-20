@@ -39,6 +39,24 @@ This document captures user stories that drive feature development. User stories
 
 ---
 
+
+#### US-001: Voice & Story generation engine
+
+> As a **entrepreneur building a community sustainability app**, I want **generate a brand voice and mission story from a short description of my community** so that **every downstream agent and contributor builds on one consistent, compelling narrative**.
+
+**Implemented in:** Planned
+
+**Status:** Planned
+
+**Acceptance Criteria:**
+- [ ] Voice & Story agent returns a Voice Profile (tone, personality, core values)
+- [ ] Output includes a Story Engine: ABT pitch, Story Spine, Story Statement, Proverb, and Metaphor
+- [ ] Agent output is Zod-validated structured data consumed by downstream agents
+- [ ] LLM calls run server-side across configured providers (anthropic/openai/xai/google/bedrock); no keys in the client
+- [ ] Generated voice and story render in the wizard UI
+
+---
+
 ## Planned Stories
 
 Stories below are candidates for future epics. Move to "Completed Stories" when implemented.

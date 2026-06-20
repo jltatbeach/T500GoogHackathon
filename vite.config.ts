@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import react from "@vitejs/plugin-react";
-import { type Plugin, defineConfig, loadEnv } from "vite";
+import { type Plugin, type PluginOption, defineConfig, loadEnv } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 
 /**
  * Dev-only API middleware.
@@ -55,7 +56,46 @@ function readJson(req: import("node:http").IncomingMessage): Promise<unknown> {
 }
 
 export default defineConfig({
-	plugins: [react(), devApi()],
+	plugins: [
+		react(),
+		devApi(),
+		VitePWA({
+			// New service worker activates automatically on next load (SA standard).
+			registerType: "autoUpdate",
+			injectRegister: "auto",
+			includeAssets: ["favicon.svg", "favicon.ico", "apple-touch-icon.png"],
+			manifest: {
+				name: "Smart Community App Generator",
+				short_name: "Smart Community",
+				description:
+					"AI-workflow-driven generator for community sustainability apps with built-in contribution-reward loops.",
+				theme_color: "#2f8542",
+				background_color: "#ffffff",
+				display: "standalone",
+				start_url: "/",
+				icons: [
+					{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+					{ src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+					{
+						src: "/icons/maskable-512.png",
+						sizes: "512x512",
+						type: "image/png",
+						purpose: "maskable",
+					},
+				],
+			},
+			workbox: {
+				// App-shell PWA: precache the build, but never cache the server-side
+				// LLM endpoint — generation always needs the network.
+				navigateFallbackDenylist: [/^\/api\//],
+				runtimeCaching: [
+					{ urlPattern: ({ url }) => url.pathname.startsWith("/api"), handler: "NetworkOnly" },
+				],
+			},
+			// vite-plugin-pwa pulls a second vite copy (via workbox-build → terser),
+			// so its Plugin type identity differs; reconcile to this project's vite.
+		}) as PluginOption,
+	],
 	build: { outDir: "dist", emptyOutDir: true },
 	server: { open: true },
 	test: {
