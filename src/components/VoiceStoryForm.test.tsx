@@ -43,6 +43,27 @@ describe("VoiceStoryForm", () => {
 				callToAction: "c",
 				evangelizationAngles: ["a"],
 			},
+			storyEngine: {
+				abt: {
+					agreement: "a",
+					andMultiplier: "and",
+					butObstacle: "but",
+					thereforeSolution: "therefore",
+					combined: "ABT",
+				},
+				storySpine: {
+					onceUponATime: "o",
+					everyDay: "e",
+					butOneDay: "b",
+					becauseOfThat: ["x"],
+					untilFinally: "u",
+					everSince: "ever",
+					narrative: "n",
+				},
+				storyStatement: "twist",
+				proverb: "Shared plates, stronger states.",
+				metaphor: { statement: "garden", relevance: "r", implication: "i" },
+			},
 			targetCommunity: "Urban families",
 		};
 		mockGenerate.mockResolvedValueOnce(output);

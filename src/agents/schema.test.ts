@@ -27,6 +27,33 @@ describe("VoiceStoryOutputSchema", () => {
 				callToAction: "Join and contribute",
 				evangelizationAngles: ["wellness", "regeneration"],
 			},
+			storyEngine: {
+				abt: {
+					agreement: "You want to eat clean",
+					andMultiplier: "and it shapes your long-term health",
+					butObstacle: "but doing it alone is hard",
+					thereforeSolution: "therefore we reward shared progress",
+					combined:
+						"You want to eat clean and it shapes your health, but going it alone is hard, therefore we reward shared progress.",
+				},
+				storySpine: {
+					onceUponATime: "a busy family wanted to eat better",
+					everyDay: "they struggled alone",
+					butOneDay: "they found a community that rewarded sharing",
+					becauseOfThat: ["they shared meals", "they earned rewards"],
+					untilFinally: "healthy habits stuck",
+					everSince: "the community grows together",
+					narrative:
+						"Once a family struggled to eat well alone, until a community rewarded sharing, and ever since they thrive together.",
+				},
+				storyStatement: "We pay people to eat their vegetables.",
+				proverb: "Shared plates, stronger states.",
+				metaphor: {
+					statement: "The community is a garden",
+					relevance: "members plant habits and harvest rewards together",
+					implication: "growth is collective and regenerative",
+				},
+			},
 			targetCommunity: "Health-conscious urban families",
 		});
 		expect(result.success).toBe(true);

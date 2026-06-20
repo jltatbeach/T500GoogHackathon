@@ -1,11 +1,13 @@
 import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 import { createChatModel } from "./llm";
 import {
+	type StoryEngine,
 	type StoryNarrative,
 	type VoiceProfile,
 	type VoiceStoryOutput,
 	VoiceStoryOutputSchema,
 } from "./schema";
+import { FRAMEWORK_ATTRIBUTION, STORY_FRAMEWORKS } from "./storyFrameworks";
 
 /**
  * Voice & Story Agent — the first node in the Smart App generation workflow.
@@ -25,6 +27,10 @@ const SmartAppState = Annotation.Root({
 		reducer: (_prev, next) => next,
 		default: () => null,
 	}),
+	storyEngine: Annotation<StoryEngine | null>({
+		reducer: (_prev, next) => next,
+		default: () => null,
+	}),
 	targetCommunity: Annotation<string>({
 		reducer: (_prev, next) => next,
 		default: () => "",
@@ -33,14 +39,16 @@ const SmartAppState = Annotation.Root({
 
 const SYSTEM_PROMPT = `You are an expert ReFi storytelling coach and AI workflow facilitator, following the smart-assets.io development approach.
 
-Help the entrepreneur create the Voice and Story as the first step of an agent-orchestrated Smart App generation workflow.
+Create the Voice and Story as the first step of an agent-orchestrated Smart App generation workflow. Produce:
+1. Brand Voice (tone, personality, core values)
+2. Core Story / Narrative (mission, problem, vision, call to action, evangelization angles)
+3. A Story Engine built on these proven storytelling frameworks:
 
-Guide through:
-1. Brand Voice (tone, personality, values)
-2. Core Story / Narrative (problem, vision, impact, evangelization)
-3. How this story enables community contributions and rewards
+${STORY_FRAMEWORKS}
 
-Emphasize regenerative, community-powered, contribution-reward philosophy. This story will guide all subsequent AI agents and future contributor reviews.`;
+Emphasize a regenerative, community-powered, contribution-reward philosophy. This story guides all subsequent AI agents and future contributor reviews. Keep the metaphor's vocabulary consistent with the brand voice.
+
+(${FRAMEWORK_ATTRIBUTION})`;
 
 async function voiceStoryNode(
 	state: typeof SmartAppState.State,
@@ -59,6 +67,7 @@ async function voiceStoryNode(
 	return {
 		voiceProfile: result.voiceProfile,
 		storyNarrative: result.storyNarrative,
+		storyEngine: result.storyEngine,
 		targetCommunity: result.targetCommunity,
 	};
 }
@@ -75,6 +84,7 @@ export async function runVoiceStory(userInput: string): Promise<VoiceStoryOutput
 	return VoiceStoryOutputSchema.parse({
 		voiceProfile: final.voiceProfile,
 		storyNarrative: final.storyNarrative,
+		storyEngine: final.storyEngine,
 		targetCommunity: final.targetCommunity,
 	});
 }

@@ -24,7 +24,7 @@ flowchart LR
     D -. iterate .-> A
 ```
 
-1. **Voice & Story Agent** *(first step)* — Guided AI-assisted creation of brand voice, mission narrative, and evangelization story. Outputs Zod-validated structured data consumed by every later agent. Initial user input is treated as a rewardable *contribution*.
+1. **Voice & Story Agent** *(first step)* — Guided AI-assisted creation of brand voice, mission narrative, and a **Story Engine** built on proven storytelling frameworks: an [ABT](https://abtframework.com) pitch (Randy Olson), a Story Spine (Kenn Adams), a "gist with a twist" Story Statement, a Proverb, and a central Metaphor (Ron Ploof). Outputs Zod-validated structured data consumed by every later agent. Initial user input is treated as a rewardable *contribution*.
 2. **Design & Feature Agents** — Generate app structure, contribution flows, and reward mechanics consistent with the story and ReFi principles.
 3. **Review & Contribution Loop** — AI-assisted review; contributions (data/reviews) are scored and rewarded, mirroring the business model.
 4. **Live Preview & Iteration** — A runnable mini-app (the "Health Clean" example) with a working contribution → reward loop and placeholders for future smart-contract / ZK features.
@@ -114,6 +114,15 @@ See [docs/3MinuteDemoScript.md](./docs/3MinuteDemoScript.md) for the full script
 - [docs/VoiceStoryAgent.md](./docs/VoiceStoryAgent.md) — agent spec, state schema, and prompt template
 - [docs/designs/UILayout.md](./docs/designs/UILayout.md) — screens, components, and styling
 - [CLAUDE.md](./CLAUDE.md) — guidance for AI coding assistants (the canonical project reference)
+- [src/agents/storyFrameworks.ts](./src/agents/storyFrameworks.ts) — the storytelling framework rules powering the voice engine
+
+## Acknowledgements
+
+The Voice & Story engine is built on these storytelling frameworks, used under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) with attribution (construction rules paraphrased, not copied):
+
+- **ABT (And, But, Therefore)** — Randy Olson ([abtframework.com](https://abtframework.com))
+- **Story Spine** — Kenn Adams
+- **Story Statement**, **Proverb Construction Kit™**, **Business Metaphor** — Ron Ploof ([storyhow.com](https://storyhow.com))
 
 ## Contributing
 

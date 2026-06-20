@@ -1,8 +1,8 @@
 import type { VoiceStoryOutput } from "../agents/schema";
 
-/** Live preview of the generated Voice Profile + Story Narrative. */
+/** Live preview of the generated Voice Profile + Story Narrative + Story Engine. */
 export function StoryResult({ result }: { result: VoiceStoryOutput }) {
-	const { voiceProfile, storyNarrative, targetCommunity } = result;
+	const { voiceProfile, storyNarrative, storyEngine, targetCommunity } = result;
 
 	return (
 		<article aria-label="Generated voice and story" className="space-y-4">
@@ -45,6 +45,49 @@ export function StoryResult({ result }: { result: VoiceStoryOutput }) {
 					</div>
 				</dl>
 			</div>
+
+			<section aria-label="Story engine" className="space-y-4">
+				<h3 className="font-semibold text-refi-900">Story Engine</h3>
+
+				<div className="rounded-lg border border-gray-200 p-4">
+					<h4 className="text-sm font-semibold text-gray-800">ABT pitch</h4>
+					<p className="mt-1 text-sm italic">{storyEngine.abt.combined}</p>
+				</div>
+
+				<div className="rounded-lg border border-gray-200 p-4">
+					<h4 className="text-sm font-semibold text-gray-800">Story Spine</h4>
+					<p className="mt-1 text-sm">{storyEngine.storySpine.narrative}</p>
+					<p className="mt-2 text-xs text-gray-500">
+						<span className="font-medium">But one day:</span> {storyEngine.storySpine.butOneDay}
+					</p>
+				</div>
+
+				<div className="grid gap-4 sm:grid-cols-2">
+					<div className="rounded-lg border border-gray-200 p-4">
+						<h4 className="text-sm font-semibold text-gray-800">Story Statement</h4>
+						<p className="mt-1 text-sm italic">“{storyEngine.storyStatement}”</p>
+					</div>
+					<div className="rounded-lg border border-gray-200 p-4">
+						<h4 className="text-sm font-semibold text-gray-800">Proverb</h4>
+						<p className="mt-1 text-sm italic">“{storyEngine.proverb}”</p>
+					</div>
+				</div>
+
+				<div className="rounded-lg border border-gray-200 p-4">
+					<h4 className="text-sm font-semibold text-gray-800">Metaphor</h4>
+					<p className="mt-1 text-sm italic">{storyEngine.metaphor.statement}</p>
+					<dl className="mt-2 space-y-1 text-xs text-gray-600">
+						<div className="flex gap-2">
+							<dt className="font-medium">Relevance:</dt>
+							<dd>{storyEngine.metaphor.relevance}</dd>
+						</div>
+						<div className="flex gap-2">
+							<dt className="font-medium">Implication:</dt>
+							<dd>{storyEngine.metaphor.implication}</dd>
+						</div>
+					</dl>
+				</div>
+			</section>
 
 			<p className="text-sm text-gray-600">
 				<span className="font-medium">Target community:</span> {targetCommunity}

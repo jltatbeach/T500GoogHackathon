@@ -274,6 +274,7 @@ architecture:
 ### Key Design Patterns
 - **StateGraph workflow**: agents are nodes in a stateful LangGraph that downstream nodes must respect and build upon.
 - **Structured agent I/O**: all agent outputs are Zod-validated structured data, not free text.
+- **Framework-driven voice engine**: the VoiceStoryAgent composes its prompt from `src/agents/storyFrameworks.ts` and emits a Story Engine (ABT, Story Spine, Story Statement, Proverb, Metaphor). Frameworks by Randy Olson / Kenn Adams / Ron Ploof, CC BY-NC 4.0 (paraphrased with attribution).
 - **Contribution-as-first-class**: user input and reviews are modeled as rewardable contributions throughout.
 
 ## Code Style
