@@ -95,6 +95,15 @@ pnpm test              # Vitest
 
 `pnpm dev` runs the React app and a dev-only `/api/voice-story` middleware so the workflow works locally without `vercel dev`; in production that path is served by the Vercel Function in `api/`. LLM calls run **server-side only** — provider keys live in environment variables (see `.env.example`), never in the client bundle.
 
+### Git hooks
+
+`pnpm install` runs the `prepare` script, which installs [husky](https://typicode.github.io/husky/) git hooks (re-run manually with `pnpm hooks:install`):
+
+- **pre-commit** — `pnpm lint` + `pnpm typecheck`
+- **pre-push** — `pnpm lint`, `typecheck`, `test`, `build` (with a stale-tracking-ref race guard)
+
+Both hooks also run uv-based Python checks (`uv run ruff check` / `ruff format --check` / `pytest`) **only when a `pyproject.toml` is present**, so the optional uv/Python hybrid is covered automatically once added.
+
 ### LLM providers
 
 The LangGraph agents target the same providers wired into `/multi-review`, selected via `LLM_PROVIDER` (`anthropic` | `openai` | `xai` | `google` | `bedrock`). Each uses its standard key env var (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `XAI_API_KEY`/`GROK_API_KEY`, `GEMINI_API_KEY`/`GOOGLE_API_KEY`, AWS creds for Bedrock).

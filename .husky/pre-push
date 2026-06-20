@@ -1,0 +1,58 @@
+# Pre-push: full validation. Mirrors the SA/* husky pattern (race-guarded).
+
+# Check if there are commits to push (works for both new and existing branches)
+UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || true)
+if [ -n "$UPSTREAM" ]; then
+	if ! git status | grep -q "Your branch is ahead"; then
+		echo "Error: No changes to push. Your branch is not ahead of the remote."
+		exit 1
+	fi
+fi
+# New branches (no upstream) are allowed to push.
+
+# Guard against racing pushes: verify HEAD isn't already on the remote.
+# When two pushes overlap, the local tracking ref may be stale, causing
+# tests to run unnecessarily before the push is rejected by the remote.
+_qc_local_head=$(git rev-parse HEAD)
+_qc_remote_head=$(git ls-remote origin "$(git symbolic-ref HEAD)" 2>/dev/null | awk '{print $1}')
+if [ -n "$_qc_remote_head" ] && [ "$_qc_local_head" = "$_qc_remote_head" ]; then
+	echo "Already up to date with remote. Skipping pre-push checks."
+	exit 0
+fi
+
+# Run checks with quiet output to avoid buffer overflow in CI tools and
+# Claude Code. Each step logs to a temp file; on failure the log is dumped.
+_prepush_log=$(mktemp)
+trap 'rm -f "$_prepush_log"' EXIT
+
+run_step() {
+	label="$1"
+	shift
+	printf "  %-14s" "$label..."
+	if "$@" >"$_prepush_log" 2>&1; then
+		echo "ok"
+	else
+		echo "FAILED"
+		echo "--- $label output ---"
+		tail -50 "$_prepush_log"
+		echo "--- end $label output ---"
+		exit 1
+	fi
+}
+
+echo "pre-push checks:"
+
+# --- TypeScript ---
+run_step "lint" pnpm lint
+run_step "typecheck" pnpm typecheck
+run_step "test" pnpm test
+run_step "build" pnpm build
+
+# --- Python (uv) — only when a uv/Python project is present ---
+if [ -f pyproject.toml ]; then
+	run_step "py:lint" uv run ruff check .
+	run_step "py:format" uv run ruff format --check .
+	run_step "py:test" uv run pytest
+fi
+
+echo "all checks passed"

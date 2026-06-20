@@ -175,7 +175,12 @@ pnpm typecheck
 
 # Test (Vitest)
 pnpm test
+
+# Install git hooks (also runs automatically via `prepare` on pnpm install)
+pnpm hooks:install
 ```
+
+**Git hooks (husky):** pre-commit runs `lint` + `typecheck`; pre-push runs `lint`/`typecheck`/`test`/`build` with an `ls-remote` race guard. Both run uv Python checks (`ruff`, `pytest`) only when a `pyproject.toml` exists. Mirrors the SA/* hook pattern.
 
 LLM calls run **server-side only** (`api/voice-story.ts` in prod, the Vite dev middleware locally) so provider keys never reach the client bundle.
 

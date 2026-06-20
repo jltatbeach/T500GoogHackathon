@@ -1,0 +1,14 @@
+# Pre-commit: fast checks (lint + typecheck). Mirrors the SA/* husky pattern.
+
+echo "pre-commit checks:"
+
+# --- TypeScript ---
+pnpm lint
+pnpm typecheck
+
+# --- Python (uv) — only when a uv/Python project is present ---
+if [ -f pyproject.toml ]; then
+	echo "  python (uv)..."
+	uv run ruff check .
+	uv run ruff format --check .
+fi
