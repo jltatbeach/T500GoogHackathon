@@ -1,6 +1,7 @@
 import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 import { createChatModel } from "./llm";
 import {
+	type ResearchBrief,
 	type StoryEngine,
 	type StoryNarrative,
 	type VoiceProfile,
@@ -8,6 +9,19 @@ import {
 	VoiceStoryOutputSchema,
 } from "./schema";
 import { FRAMEWORK_ATTRIBUTION, STORY_FRAMEWORKS } from "./storyFrameworks";
+
+/** Render the optional research brief as prompt context. */
+function researchContext(brief: ResearchBrief | null): string {
+	if (!brief) return "";
+	return [
+		"\n\nResearch findings to ground the story (from the Research step):",
+		`- Audience: ${brief.audience}`,
+		`- Market gap: ${brief.marketGap}`,
+		`- Comparables: ${brief.comparables.join("; ")}`,
+		`- Reward opportunities: ${brief.rewardOpportunities.join("; ")}`,
+		`- Assumptions: ${brief.assumptions.join("; ")}`,
+	].join("\n");
+}
 
 /**
  * Voice & Story Agent — the first node in the Smart App generation workflow.
@@ -19,6 +33,10 @@ import { FRAMEWORK_ATTRIBUTION, STORY_FRAMEWORKS } from "./storyFrameworks";
 
 const SmartAppState = Annotation.Root({
 	userInput: Annotation<string>(),
+	researchBrief: Annotation<ResearchBrief | null>({
+		reducer: (_prev, next) => next,
+		default: () => null,
+	}),
 	voiceProfile: Annotation<VoiceProfile | null>({
 		reducer: (_prev, next) => next,
 		default: () => null,
@@ -60,7 +78,7 @@ async function voiceStoryNode(
 		{ role: "system", content: SYSTEM_PROMPT },
 		{
 			role: "user",
-			content: `User goal: ${state.userInput}\n\nProduce the Voice Profile, Story Narrative, and target community.`,
+			content: `User goal: ${state.userInput}${researchContext(state.researchBrief)}\n\nProduce the Voice Profile, Story Narrative, and target community.`,
 		},
 	])) as VoiceStoryOutput;
 
@@ -79,8 +97,11 @@ const graph = new StateGraph(SmartAppState)
 	.compile();
 
 /** Run the workflow and return the Voice & Story Agent's structured output. */
-export async function runVoiceStory(userInput: string): Promise<VoiceStoryOutput> {
-	const final = await graph.invoke({ userInput });
+export async function runVoiceStory(
+	userInput: string,
+	researchBrief: ResearchBrief | null = null,
+): Promise<VoiceStoryOutput> {
+	const final = await graph.invoke({ userInput, researchBrief });
 	return VoiceStoryOutputSchema.parse({
 		voiceProfile: final.voiceProfile,
 		storyNarrative: final.storyNarrative,

@@ -95,11 +95,15 @@ tasks:
 
   - id: TASK-008-2
     title: "Voice & Story research context (FLOW-001)"
-    status: pending
+    status: complete
+    claimed_by: claude-session
+    completed_date: 2026-06-20
     blocked_by: [TASK-008-1]
+    unit_tests: [src/agents/schema.test.ts, src/agents/voiceStory.live.test.ts]
     acceptance:
       - "VoiceStoryRequestSchema accepts an optional researchBrief; voiceStory.ts includes it in the prompt context."
       - "The seeded prompt remains editable before generation; existing VoiceStory tests still pass."
+      - "Client generateVoiceStory(userInput, researchBrief?) and handleVoiceStory thread the brief through; live VoiceStory agent test verifies a schema-valid full Story Engine."
 
   - id: TASK-008-3
     title: "Generate-App agent slice (FLOW-004)"
@@ -185,8 +189,12 @@ tasks:
 
   - id: TASK-001-2
     title: "Draft low-fidelity wireframes from the user workflows"
-    status: pending
+    status: complete
+    claimed_by: claude-session
+    completed_date: 2026-06-20
     blocked_by: [TASK-001-1]
+    unit_tests: [Design/]
+    completion_note: "Satisfied by the generated mockup set under Design/ (ideation, market_validation, brand_story, business_summary, app_generation, app_preview — dark/fixed/step variants + DESIGN.md system docs), the agreed equivalent artifact for the journey."
     acceptance:
       - "Create docs/designs/InitialWireframes.md or an equivalent agreed artifact."
       - "Use the approved docs/User-Flows.md workflows as the source for screen order and state transitions."

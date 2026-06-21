@@ -3,6 +3,7 @@ export interface WorkflowStep {
 	label: string;
 	description: string;
 	badge?: string;
+	icon?: string;
 }
 
 export type BackgroundMode = "system" | "light" | "dark";
@@ -13,7 +14,7 @@ const BACKGROUND_OPTIONS: { value: BackgroundMode; label: string }[] = [
 	{ value: "dark", label: "Dark" },
 ];
 
-/** Responsive side-nav workflow rail matching docs/designs/InitialWireframes.md. */
+/** Responsive side-nav workflow rail matching the generated design wireframes. */
 export function WorkflowSideNav({
 	steps,
 	current,
@@ -31,41 +32,66 @@ export function WorkflowSideNav({
 	effectiveBackground: Exclude<BackgroundMode, "system">;
 	onBackgroundModeChange: (mode: BackgroundMode) => void;
 }) {
+	const isDark = effectiveBackground === "dark";
+	const progress = Math.round(((current + 1) / steps.length) * 100);
+
 	return (
 		<nav
 			aria-label="Workflow navigation"
-			className="flex h-full min-h-screen w-72 flex-col bg-refi-900 p-5 text-white shadow-xl"
+			className={`flex h-full min-h-screen w-[280px] flex-col border-r p-5 shadow-sm ${
+				isDark
+					? "border-[#3f493e] bg-[#121412] text-[#e2e3df]"
+					: "border-[#bfcabb] bg-[#fbf9f4] text-[#1b1c19]"
+			}`}
 		>
-			<div>
-				<p className="text-xs font-semibold uppercase tracking-[0.24em] text-refi-300">
+			<div className="px-2 pt-4">
+				<h1 className="font-display text-2xl font-black leading-tight text-refi-700 dark:text-refi-300">
 					Smart Community
-				</p>
-				<h1 className="mt-2 text-xl font-bold leading-tight">App Generator</h1>
-				<p className="mt-3 text-sm text-refi-100">
-					Turn a founder idea into a story-led app with a visible contribution loop.
+				</h1>
+				<p className={isDark ? "text-sm text-[#bfcabb]" : "text-sm text-[#707a6e]"}>
+					Regenerative App Builder
 				</p>
 			</div>
 
-			<div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-3">
-				<div className="flex items-center justify-between gap-3">
+			<div
+				className={`mt-8 rounded-3xl border p-4 ${
+					isDark ? "border-white/10 bg-white/5" : "border-[#e4e2dd] bg-white/70"
+				}`}
+			>
+				<div className="flex items-end justify-between gap-3">
 					<div>
-						<p className="text-xs font-semibold uppercase tracking-wide text-refi-100">
-							Background
+						<p className="font-display text-2xl font-bold text-refi-700 dark:text-refi-300">
+							{progress}%
 						</p>
-						<p className="text-xs text-refi-100/70">Effective: {effectiveBackground}</p>
+						<p className={isDark ? "text-xs text-[#bfcabb]" : "text-xs text-[#707a6e]"}>
+							Step {current + 1} of {steps.length}
+						</p>
 					</div>
+					<span
+						className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+							isDark ? "bg-[#1e201e] text-[#83da8c]" : "bg-refi-50 text-refi-700"
+						}`}
+					>
+						{effectiveBackground}
+					</span>
 				</div>
-				<div className="mt-3 grid grid-cols-3 gap-1 rounded-full bg-refi-950/40 p-1">
+				<div className="mt-3 h-2 rounded-full bg-[#e4e2dd] dark:bg-[#333533]">
+					<div
+						className="h-2 rounded-full bg-refi-600 transition-all"
+						style={{ width: `${progress}%` }}
+					/>
+				</div>
+				<div className="mt-4 grid grid-cols-3 gap-1 rounded-full bg-[#e4e2dd]/70 p-1 dark:bg-black/30">
 					{BACKGROUND_OPTIONS.map((option) => (
 						<button
 							key={option.value}
 							type="button"
 							onClick={() => onBackgroundModeChange(option.value)}
 							aria-pressed={backgroundMode === option.value}
-							className={`min-h-11 rounded-full px-2 py-1 text-xs font-semibold ${
+							className={`min-h-11 rounded-full px-2 py-1 text-xs font-semibold transition ${
 								backgroundMode === option.value
-									? "bg-white text-refi-900"
-									: "text-refi-100 hover:bg-white/10"
+									? "bg-white text-refi-900 shadow-sm dark:bg-[#83da8c] dark:text-[#003913]"
+									: "text-[#3f493e] hover:bg-white/60 dark:text-[#bfcabb] dark:hover:bg-white/10"
 							}`}
 						>
 							{option.label}
@@ -74,10 +100,18 @@ export function WorkflowSideNav({
 				</div>
 			</div>
 
-			<ol className="mt-6 space-y-2">
+			<ol className="mt-8 space-y-2">
 				{steps.map((step, index) => {
 					const status = index < current ? "done" : index === current ? "current" : "upcoming";
 					const isDisabled = !canSelect(index);
+					const activeClass = isDark
+						? "bg-[#587d6e] text-[#fafffa] shadow-lg shadow-black/20"
+						: "bg-[#587d6e] text-[#fafffa] shadow-sm";
+					const doneClass = isDark
+						? "text-[#e2e3df] hover:bg-white/10"
+						: "text-[#1b1c19] hover:bg-[#eae8e3]";
+					const upcomingClass = isDark ? "text-[#bfcabb]/55" : "text-[#3f493e]/60";
+
 					return (
 						<li key={step.key}>
 							<button
@@ -85,36 +119,23 @@ export function WorkflowSideNav({
 								onClick={() => onSelect(index)}
 								disabled={isDisabled}
 								aria-current={status === "current" ? "step" : undefined}
-								className={`flex min-h-11 w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition ${
-									status === "current"
-										? "bg-refi-600 shadow-lg shadow-refi-950/20"
-										: status === "done"
-											? "text-refi-50 hover:bg-refi-700"
-											: "cursor-not-allowed text-refi-100/45"
-								}`}
+								className={`flex min-h-11 w-full items-center gap-3 rounded-full px-4 py-3 text-left transition active:scale-[0.98] ${
+									status === "current" ? activeClass : status === "done" ? doneClass : upcomingClass
+								} ${isDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
 							>
-								<span
-									aria-hidden="true"
-									className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-										status === "upcoming"
-											? "bg-white/10 text-refi-100/60"
-											: "bg-refi-50 text-refi-700"
-									}`}
-								>
-									{status === "done" ? "✓" : index + 1}
+								<span aria-hidden="true" className="w-6 shrink-0 text-xl leading-none">
+									{status === "done" ? "✓" : (step.icon ?? `${index + 1}`)}
 								</span>
 								<span className="min-w-0">
-									<span className="flex flex-wrap items-center gap-2 text-sm font-semibold">
+									<span className="flex flex-wrap items-center gap-2 font-body text-sm font-semibold">
 										{step.label}
 										{step.badge && (
-											<span className="rounded-full bg-earth-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-earth-600">
+											<span className="rounded-full bg-[#ffdbd1] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#641700]">
 												{step.badge}
 											</span>
 										)}
 									</span>
-									<span className="mt-1 block text-xs leading-5 text-refi-100/80">
-										{step.description}
-									</span>
+									<span className="mt-0.5 block text-xs opacity-75">{step.description}</span>
 								</span>
 							</button>
 						</li>
@@ -122,9 +143,19 @@ export function WorkflowSideNav({
 				})}
 			</ol>
 
-			<div className="mt-auto rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-refi-100">
-				<p className="font-semibold text-white">Future: install PWA</p>
-				<p className="mt-1">Offline app shell now; AI generation stays network-only.</p>
+			<div className="mt-auto space-y-4 px-2 pb-2">
+				<button
+					type="button"
+					className="min-h-11 w-full rounded-full bg-refi-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-refi-900/10 transition hover:bg-refi-700"
+				>
+					Save Progress
+				</button>
+				<div className={`border-t pt-4 ${isDark ? "border-white/10" : "border-[#bfcabb]"}`}>
+					<p className="font-semibold">Alex River</p>
+					<p className={isDark ? "text-xs text-[#bfcabb]" : "text-xs text-[#707a6e]"}>
+						Project Lead
+					</p>
+				</div>
 			</div>
 		</nav>
 	);

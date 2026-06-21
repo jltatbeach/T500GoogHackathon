@@ -15,6 +15,28 @@ describe("VoiceStoryRequestSchema", () => {
 		const parsed = VoiceStoryRequestSchema.safeParse({ userInput: "A clean-eating community" });
 		expect(parsed.success).toBe(true);
 	});
+
+	it("accepts an optional research brief", () => {
+		const parsed = VoiceStoryRequestSchema.safeParse({
+			userInput: "A clean-eating community",
+			researchBrief: {
+				audience: "families",
+				marketGap: "no accountability",
+				comparables: ["Noom"],
+				rewardOpportunities: ["impact points"],
+				assumptions: ["people share publicly"],
+			},
+		});
+		expect(parsed.success).toBe(true);
+	});
+
+	it("rejects a malformed research brief", () => {
+		const parsed = VoiceStoryRequestSchema.safeParse({
+			userInput: "x",
+			researchBrief: { audience: "families" },
+		});
+		expect(parsed.success).toBe(false);
+	});
 });
 
 describe("VoiceStoryOutputSchema", () => {

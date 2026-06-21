@@ -31,7 +31,7 @@ export async function handleVoiceStory(body: unknown): Promise<VoiceStoryOutput>
 		throw new Error(parsed.error.issues[0]?.message ?? "Invalid request");
 	}
 	assertProviderConfigured();
-	return runVoiceStory(parsed.data.userInput);
+	return runVoiceStory(parsed.data.userInput, parsed.data.researchBrief ?? null);
 }
 
 export async function handleResearch(body: unknown): Promise<ResearchBrief> {

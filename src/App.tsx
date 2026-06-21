@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { VoiceStoryOutput } from "./agents/schema";
+import { BusinessSummaryStep } from "./components/BusinessSummaryStep";
 import { CleanHealthPreview } from "./components/CleanHealthPreview";
 import { GenerationStep } from "./components/GenerationStep";
 import {
@@ -16,19 +17,42 @@ import {
 	type WorkflowStep,
 } from "./components/WorkflowSideNav";
 
-// Wizard steps follow the canonical journey pipeline (docs/User-Flows.md):
-// Ideation → Emulated Research → Voice & Story → Generate App → Preview.
+// New visual wireframes name the same journey as:
+// Ideation → Market Validation → Brand Story → Business Summary → App Generation → App Preview.
+// Product constraints still keep Clean Health and impact points (not tokens) as canonical demo content.
 const STEPS = [
-	{ key: "ideation", label: "Ideation", description: "Problem / solution / success" },
+	{ key: "ideation", label: "Ideation", description: "Problem / solution / success", icon: "◌" },
 	{
-		key: "research",
-		label: "Research",
+		key: "market-validation",
+		label: "Market Validation",
 		description: "Audience / market / comparables",
 		badge: "Emulated",
+		icon: "✺",
 	},
-	{ key: "voice-story", label: "Voice & Story", description: "Voice Profile + Story Engine" },
-	{ key: "generate", label: "Generate App", description: "Screens + impact-point rules" },
-	{ key: "preview", label: "Preview", description: "Clean Health contribution demo" },
+	{
+		key: "brand-story",
+		label: "Brand Story",
+		description: "Voice Profile + Story Engine",
+		icon: "✍",
+	},
+	{
+		key: "business-summary",
+		label: "Business Summary",
+		description: "Blueprint before generation",
+		icon: "□",
+	},
+	{
+		key: "app-generation",
+		label: "App Generation",
+		description: "Screens + impact-point rules",
+		icon: "ϟ",
+	},
+	{
+		key: "app-preview",
+		label: "App Preview",
+		description: "Clean Health contribution demo",
+		icon: "◎",
+	},
 ] as const satisfies readonly WorkflowStep[];
 
 type StepKey = (typeof STEPS)[number]["key"];
@@ -42,15 +66,17 @@ function getSystemBackground(): EffectiveBackground {
 function stepTitle(step: StepKey): string {
 	switch (step) {
 		case "ideation":
-			return "Problem, solution, and success";
-		case "research":
-			return "Emulated research handoff";
-		case "voice-story":
-			return "Voice & Story generation";
-		case "generate":
-			return "Generate Clean Health";
-		case "preview":
-			return "Preview and contribution loop";
+			return "Let's bring your community idea to life";
+		case "market-validation":
+			return "Strong need detected";
+		case "brand-story":
+			return "Crafting your brand story";
+		case "business-summary":
+			return "Business summary";
+		case "app-generation":
+			return "Nurturing your digital ecosystem";
+		case "app-preview":
+			return "Your community is ready to bloom";
 	}
 }
 
@@ -82,14 +108,15 @@ export function App() {
 	const hasStory = Boolean(storyResult);
 	const isLast = step === STEPS.length - 1;
 	const effectiveBackground = backgroundMode === "system" ? systemBackground : backgroundMode;
+	const isDark = effectiveBackground === "dark";
 
 	function canSelect(index: number): boolean {
 		const key = STEPS[index]?.key;
 		if (!key) return false;
 		if (key === "ideation") return true;
-		if (key === "research" || key === "voice-story") return isBriefReady;
-		if (key === "generate") return hasStory;
-		if (key === "preview") return appGenerated;
+		if (key === "market-validation" || key === "brand-story") return isBriefReady;
+		if (key === "business-summary" || key === "app-generation") return hasStory;
+		if (key === "app-preview") return appGenerated;
 		return false;
 	}
 
@@ -101,32 +128,31 @@ export function App() {
 
 	function canAdvance(): boolean {
 		if (activeKey === "ideation") return isBriefReady;
-		if (activeKey === "research") return true;
-		if (activeKey === "voice-story") return hasStory;
-		if (activeKey === "generate") return appGenerated;
+		if (activeKey === "market-validation") return true;
+		if (activeKey === "brand-story") return hasStory;
+		if (activeKey === "business-summary") return hasStory;
+		if (activeKey === "app-generation") return appGenerated;
 		return false;
 	}
 
 	function nextLabel(): string {
-		if (activeKey === "ideation") return "Next: Research";
-		if (activeKey === "research") return "Next: Voice & Story";
-		if (activeKey === "voice-story") return "Next: Generate App";
-		if (activeKey === "generate") return "Next: Preview App";
+		if (activeKey === "ideation") return "Next: Market Validation";
+		if (activeKey === "market-validation") return "Next: Brand Story";
+		if (activeKey === "brand-story") return "Next: Business Summary";
+		if (activeKey === "business-summary") return "Next: App Generation";
+		if (activeKey === "app-generation") return "Next: App Preview";
 		return "Next";
 	}
 
-	const shellClass =
-		effectiveBackground === "dark"
-			? "min-h-screen bg-slate-950 text-slate-100"
-			: "min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100 text-slate-900";
-	const workspaceClass =
-		effectiveBackground === "dark"
-			? "min-h-screen flex-1 bg-slate-950/95"
-			: "min-h-screen flex-1 bg-sky-50/40";
-	const panelClass =
-		effectiveBackground === "dark"
-			? "rounded-2xl border border-white/10 bg-white p-5 text-gray-900 shadow-xl lg:p-8"
-			: "rounded-2xl border border-sky-200/80 bg-sky-50/90 p-5 shadow-xl shadow-sky-900/10 lg:p-8";
+	const shellClass = isDark
+		? "min-h-screen bg-[#121412] font-body text-[#e2e3df]"
+		: "min-h-screen bg-[#fbf9f4] font-body text-[#1b1c19]";
+	const workspaceClass = isDark
+		? "min-h-screen flex-1 bg-[radial-gradient(circle_at_70%_20%,rgba(131,218,140,0.10),transparent_32%),#121412]"
+		: "min-h-screen flex-1 bg-[radial-gradient(circle_at_76%_18%,rgba(158,247,166,0.28),transparent_28%),#fbf9f4]";
+	const panelClass = isDark
+		? "rounded-[2rem] border border-white/10 bg-[#1a1c1a]/95 p-5 shadow-2xl shadow-black/20 lg:p-8"
+		: "rounded-[2rem] border border-[#e4e2dd] bg-white/80 p-5 shadow-[0_24px_80px_-48px_rgba(47,53,47,0.35)] backdrop-blur lg:p-8";
 
 	return (
 		<div className={shellClass}>
@@ -164,67 +190,89 @@ export function App() {
 				</div>
 			)}
 
-			<div className="lg:pl-72">
+			<div className="lg:pl-[280px]">
 				<div className={workspaceClass}>
-					<header className="sticky top-0 z-20 border-b border-sky-200/70 bg-sky-50/95 px-4 py-3 backdrop-blur lg:hidden">
-						<div className="flex items-center justify-between gap-3">
-							<div>
-								<p className="text-xs font-semibold uppercase tracking-wide text-refi-600">
-									Smart Community
-								</p>
-								<p className="font-semibold text-refi-900">{active.label}</p>
+					<header
+						className={`sticky top-0 z-20 border-b px-4 py-4 backdrop-blur lg:px-8 ${
+							isDark ? "border-white/10 bg-[#121412]/90" : "border-[#e4e2dd] bg-[#fbf9f4]/90"
+						}`}
+					>
+						<div className="mx-auto flex max-w-[1200px] items-center justify-between gap-4">
+							<div className="flex min-w-0 items-center gap-3">
+								<button
+									type="button"
+									onClick={() => setIsNavOpen(true)}
+									className="min-h-11 rounded-full border border-[#bfcabb] px-4 py-2 text-sm font-semibold lg:hidden"
+								>
+									Workflow
+								</button>
+								<div className="min-w-0">
+									<p className="text-xs font-semibold uppercase tracking-[0.2em] text-refi-700 dark:text-refi-300">
+										Step {step + 1} of {STEPS.length} / {active.label}
+									</p>
+									<h1 className="truncate font-display text-xl font-black text-refi-700 lg:text-2xl">
+										{step === 0 ? "Smart Community App Generator" : stepTitle(activeKey)}
+									</h1>
+								</div>
 							</div>
-							<button
-								type="button"
-								onClick={() => setIsNavOpen(true)}
-								className="min-h-11 rounded-md bg-refi-600 px-4 py-2 text-sm font-medium text-white"
-							>
-								Workflow
-							</button>
+
+							<div className="hidden items-center gap-2 sm:flex">
+								<button type="button" className="min-h-11 rounded-full px-3 text-sm font-semibold">
+									? Support
+								</button>
+								<button type="button" className="min-h-11 rounded-full px-3 text-sm font-semibold">
+									◎ Account
+								</button>
+							</div>
 						</div>
 					</header>
 
-					<main className="mx-auto max-w-6xl px-4 py-6 lg:px-8 lg:py-10">
-						<div className="mb-6">
-							<p className="text-sm font-medium text-refi-600">
-								Step {step + 1} of {STEPS.length}: {active.label}
-							</p>
-							<h1 className="mt-1 text-3xl font-bold text-refi-900">{stepTitle(activeKey)}</h1>
-						</div>
-
+					<main className="mx-auto max-w-[1200px] px-4 py-6 lg:px-8 lg:py-10">
 						<div className={panelClass}>
 							{activeKey === "ideation" && <IdeationForm value={brief} onChange={setBrief} />}
-							{activeKey === "research" && <ResearchStep brief={brief} />}
-							{activeKey === "voice-story" && (
+							{activeKey === "market-validation" && <ResearchStep brief={brief} />}
+							{activeKey === "brand-story" && (
 								<VoiceStoryForm idea={brief} onGenerated={setStoryResult} />
 							)}
-							{activeKey === "generate" && (
+							{activeKey === "business-summary" && (
+								<BusinessSummaryStep brief={brief} story={storyResult} />
+							)}
+							{activeKey === "app-generation" && (
 								<GenerationStep
 									appGenerated={appGenerated}
 									onGenerate={() => setAppGenerated(true)}
 								/>
 							)}
-							{activeKey === "preview" && <CleanHealthPreview />}
+							{activeKey === "app-preview" && <CleanHealthPreview />}
 						</div>
 					</main>
 
-					<footer className="sticky bottom-0 border-t border-sky-200/70 bg-sky-50/95 px-4 py-3 backdrop-blur lg:px-8">
-						<div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
+					<footer
+						className={`sticky bottom-0 border-t px-4 py-3 backdrop-blur lg:px-8 ${
+							isDark ? "border-white/10 bg-[#121412]/92" : "border-[#e4e2dd] bg-[#fbf9f4]/92"
+						}`}
+					>
+						<div className="mx-auto flex max-w-[1200px] items-center justify-between gap-3">
 							<button
 								type="button"
 								onClick={() => setStep((s) => Math.max(0, s - 1))}
 								disabled={step === 0}
-								className="min-h-11 rounded-md px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+								className="min-h-11 rounded-full px-4 py-2 text-sm font-semibold text-[#3f493e] hover:bg-[#eae8e3] disabled:cursor-not-allowed disabled:opacity-40 dark:text-[#bfcabb] dark:hover:bg-white/10"
 							>
-								Back
+								← Back
 							</button>
+							<div className="hidden flex-1 items-center justify-center gap-2 md:flex">
+								<span className="text-xs text-[#707a6e] dark:text-[#bfcabb]">Smart Community</span>
+								<span className="h-px w-10 bg-[#bfcabb]" />
+								<span className="text-xs text-[#ad3309]">Grounded in regeneration</span>
+							</div>
 							<button
 								type="button"
 								onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
 								disabled={isLast || !canAdvance()}
-								className="min-h-11 rounded-md bg-refi-600 px-4 py-2 text-sm font-medium text-white hover:bg-refi-700 disabled:cursor-not-allowed disabled:opacity-50"
+								className="min-h-11 rounded-full bg-refi-600 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-refi-900/10 hover:bg-refi-700 disabled:cursor-not-allowed disabled:opacity-50"
 							>
-								{nextLabel()}
+								{nextLabel()} →
 							</button>
 						</div>
 					</footer>

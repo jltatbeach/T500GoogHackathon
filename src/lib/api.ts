@@ -15,8 +15,11 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
 }
 
 /** Client wrapper for the server-side Voice & Story workflow endpoint. */
-export function generateVoiceStory(userInput: string): Promise<VoiceStoryOutput> {
-	return postJson<VoiceStoryOutput>("/api/voice-story", { userInput });
+export function generateVoiceStory(
+	userInput: string,
+	researchBrief?: ResearchBrief,
+): Promise<VoiceStoryOutput> {
+	return postJson<VoiceStoryOutput>("/api/voice-story", { userInput, researchBrief });
 }
 
 /** Client wrapper for the server-side emulated Agentic Research endpoint. */

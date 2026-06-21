@@ -69,10 +69,6 @@ export const VoiceStoryOutputSchema = z.object({
 	targetCommunity: z.string().describe("The community this app serves"),
 });
 
-export const VoiceStoryRequestSchema = z.object({
-	userInput: z.string().min(1, "Describe the community app you want to build"),
-});
-
 // --- Research agent (FLOW-003) ---------------------------------------------
 
 /** The confirmed idea brief from Ideation (FLOW-002) — input to research. */
@@ -95,6 +91,12 @@ export const ResearchBriefSchema = z.object({
 
 export const ResearchRequestSchema = z.object({
 	idea: IdeaBriefSchema,
+});
+
+export const VoiceStoryRequestSchema = z.object({
+	userInput: z.string().min(1, "Describe the community app you want to build"),
+	/** Optional research context from the Research step (FLOW-003) to ground the story. */
+	researchBrief: ResearchBriefSchema.optional(),
 });
 
 export type VoiceProfile = z.infer<typeof VoiceProfileSchema>;
