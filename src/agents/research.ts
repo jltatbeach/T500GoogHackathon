@@ -35,7 +35,7 @@ Be crisp and specific to the idea.`;
 async function researchNode(
 	state: typeof ResearchState.State,
 ): Promise<Partial<typeof ResearchState.State>> {
-	const model = createChatModel();
+	const model = await createChatModel();
 	const structured = model.withStructuredOutput(ResearchBriefSchema, { name: "research_brief" });
 
 	const research = (await structured.invoke([

@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { handleResearch } from "../src/server/handler";
 
+export const config = { maxDuration: 60 };
+
 // Vercel Function: runs the emulated Agentic Research agent server-side.
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
 	if (req.method !== "POST") {

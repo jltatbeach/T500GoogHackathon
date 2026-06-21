@@ -30,6 +30,18 @@ function errorMessage(err: unknown): string {
 	return err instanceof Error ? err.message : "Unknown error";
 }
 
+// Keep generation below the function's maxDuration so a slow provider degrades
+// to emulated output instead of a platform timeout (500).
+const VOICE_STORY_TIMEOUT_MS = 45_000;
+
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+	let timer: ReturnType<typeof setTimeout>;
+	const timeout = new Promise<never>((_, reject) => {
+		timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+	});
+	return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
 export async function handleVoiceStory(body: unknown): Promise<VoiceStoryOutput> {
 	const parsed = VoiceStoryRequestSchema.safeParse(body);
 	if (!parsed.success) {
@@ -42,8 +54,14 @@ export async function handleVoiceStory(body: unknown): Promise<VoiceStoryOutput>
 		return createEmulatedVoiceStory(parsed.data.userInput, researchBrief);
 	}
 
+	// Any failure — missing SDK, provider error, or timeout — degrades to a
+	// schema-valid emulated story so the demo never shows a hard error.
 	try {
-		return await runVoiceStory(parsed.data.userInput, researchBrief);
+		return await withTimeout(
+			runVoiceStory(parsed.data.userInput, researchBrief),
+			VOICE_STORY_TIMEOUT_MS,
+			"voice-story",
+		);
 	} catch (err) {
 		console.warn("[voice-story] Live generation failed; using emulated output.", {
 			provider,

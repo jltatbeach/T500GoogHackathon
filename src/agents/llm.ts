@@ -1,9 +1,4 @@
-import { ChatAnthropic } from "@langchain/anthropic";
-import { ChatBedrockConverse } from "@langchain/aws";
 import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatOpenAI } from "@langchain/openai";
-import { ChatXAI } from "@langchain/xai";
 
 /**
  * Provider factory.
@@ -12,6 +7,11 @@ import { ChatXAI } from "@langchain/xai";
  * /multi-review provider wiring so a single set of credentials works across
  * tools. SERVER-ONLY — never import from client/React code (it reads secrets
  * from process.env).
+ *
+ * Providers are loaded with dynamic `import()` so a serverless function only
+ * pulls the ONE SDK it actually uses. Static imports of all five (especially
+ * `@langchain/aws`, which drags in the AWS SDK) bloated the Vercel function and
+ * caused cold-start failures (500s before the handler could run).
  */
 
 export type ProviderName = "anthropic" | "openai" | "xai" | "google" | "bedrock";
@@ -47,9 +47,12 @@ export function providerCredentialsPresent(provider: ProviderName = resolveProvi
 	}
 }
 
-export function createChatModel(provider: ProviderName = resolveProvider()): BaseChatModel {
+export async function createChatModel(
+	provider: ProviderName = resolveProvider(),
+): Promise<BaseChatModel> {
 	switch (provider) {
-		case "anthropic":
+		case "anthropic": {
+			const { ChatAnthropic } = await import("@langchain/anthropic");
 			return new ChatAnthropic({
 				model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODELS.anthropic,
 				apiKey: process.env.ANTHROPIC_API_KEY,
@@ -61,25 +64,34 @@ export function createChatModel(provider: ProviderName = resolveProvider()): Bas
 				topP: 1,
 				temperature: null,
 			});
-		case "openai":
+		}
+		case "openai": {
+			const { ChatOpenAI } = await import("@langchain/openai");
 			return new ChatOpenAI({
 				model: process.env.OPENAI_MODEL ?? DEFAULT_MODELS.openai,
 				apiKey: process.env.OPENAI_API_KEY,
 			});
-		case "xai":
+		}
+		case "xai": {
+			const { ChatXAI } = await import("@langchain/xai");
 			return new ChatXAI({
 				model: process.env.XAI_MODEL ?? DEFAULT_MODELS.xai,
 				apiKey: process.env.XAI_API_KEY ?? process.env.GROK_API_KEY,
 			});
-		case "google":
+		}
+		case "google": {
+			const { ChatGoogleGenerativeAI } = await import("@langchain/google-genai");
 			return new ChatGoogleGenerativeAI({
 				model: process.env.GEMINI_MODEL ?? process.env.GOOGLE_MODEL ?? DEFAULT_MODELS.google,
 				apiKey: process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY,
 			});
-		case "bedrock":
+		}
+		case "bedrock": {
+			const { ChatBedrockConverse } = await import("@langchain/aws");
 			return new ChatBedrockConverse({
 				model: process.env.BEDROCK_MODEL ?? DEFAULT_MODELS.bedrock,
 				region: process.env.AWS_REGION ?? process.env.AWS_DEFAULT_REGION ?? "us-east-1",
 			});
+		}
 	}
 }

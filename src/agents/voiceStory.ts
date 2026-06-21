@@ -71,7 +71,7 @@ Emphasize a regenerative, community-powered, contribution-reward philosophy. Thi
 async function voiceStoryNode(
 	state: typeof SmartAppState.State,
 ): Promise<Partial<typeof SmartAppState.State>> {
-	const model = createChatModel();
+	const model = await createChatModel();
 	const structured = model.withStructuredOutput(VoiceStoryOutputSchema, { name: "voice_story" });
 
 	const result = (await structured.invoke([
