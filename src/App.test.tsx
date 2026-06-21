@@ -19,14 +19,15 @@ async function fillIdeation() {
 	await userEvent.type(screen.getByLabelText(/what does success look like/i), "retention");
 }
 
-describe("App wizard", () => {
-	it("starts on the Ideation step with Back disabled", () => {
+describe("App workflow shell", () => {
+	it("starts on Ideation with Back and the next step disabled", () => {
 		renderApp();
-		expect(screen.getByRole("button", { name: /ideation problem/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
-		expect(screen.getByRole("button", { name: /^back$/i })).toBeDisabled();
+		expect(screen.getByRole("button", { name: /back/i })).toBeDisabled();
+		expect(screen.getByRole("button", { name: /next: market validation/i })).toBeDisabled();
 	});
 
 	it("defaults the background switch to system", () => {
@@ -37,27 +38,27 @@ describe("App wizard", () => {
 		);
 	});
 
-	it("gates Next until the problem/solution/success brief is complete", async () => {
+	it("gates the next step until the problem/solution/success brief is complete", async () => {
 		renderApp();
-		const next = screen.getByRole("button", { name: /^next: research$/i });
+		const next = screen.getByRole("button", { name: /next: market validation/i });
 		expect(next).toBeDisabled();
 
 		await fillIdeation();
 		expect(next).toBeEnabled();
 	});
 
-	it("advances to the next step and Back returns", async () => {
+	it("advances to Market Validation and Back returns to Ideation", async () => {
 		renderApp();
 		await fillIdeation();
-		await userEvent.click(screen.getByRole("button", { name: /^next: research$/i }));
+		await userEvent.click(screen.getByRole("button", { name: /next: market validation/i }));
 
-		expect(screen.getByRole("button", { name: /research emulated/i })).toHaveAttribute(
+		expect(screen.getByRole("button", { name: /market validation/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
 
-		await userEvent.click(screen.getByRole("button", { name: /^back$/i }));
-		expect(screen.getByRole("button", { name: /ideation problem/i })).toHaveAttribute(
+		await userEvent.click(screen.getByRole("button", { name: /back/i }));
+		expect(screen.getByRole("button", { name: /ideation/i })).toHaveAttribute(
 			"aria-current",
 			"step",
 		);
