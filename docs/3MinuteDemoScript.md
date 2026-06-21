@@ -23,6 +23,7 @@ brand narrative, app structure, and a built-in contribution -> impact-points loo
 - Have a short Clean Health idea ready to paste into the three Ideation fields.
 - Use the live Voice Story generation if provider credentials are available.
 - Keep a pre-generated Voice Story result or screenshot ready as fallback if the provider is slow or unavailable.
+- Rehearse the Clean Health generation run-through: Generate Clean Health preview -> Pipeline Status -> Clean Health generated PWA -> App Metadata -> Contribution Logic.
 - Do not present impact points as tokens, claimable assets, or live smart-contract rewards.
 
 ## Timed Run of Show
@@ -110,13 +111,26 @@ Add if time allows:
 
 Advance to App Generation.
 
-### 2:05-2:25 - App Generation: Agent Workflow Trace
+### 2:05-2:35 - Clean Health App Generation Run-Through
 
 Click **Generate Clean Health preview** and show the pipeline status moving to ready.
 
 Say:
 
-"Now the app-generation step turns the blueprint into screens, contribution mechanics, and impact-point rules. This is the visible agent workflow trace judges can understand at a glance."
+"Now the app-generation step turns the blueprint into a Clean Health app. The generator is assembling the product structure, contribution flow, reward mechanics, and preview shell from the same story and business summary we just created."
+
+Run through the visible generation stages:
+
+- **Designing structure:** point to "Layout and architecture validated."
+- **Building contribution flow:** point to "Defining regenerative loops."
+- **Creating reward mechanics:** point to "Impact-point rules queued."
+- **Assembling preview:** point to "Finalizing visual assets."
+
+After clicking generate, show completion moving from 64% to 100% and the **Clean Health preview ready** confirmation.
+
+Say:
+
+"This is the build quality story: each step has a clear contract, and the generated output is not free-form text. It becomes a structured app preview with tabs, metadata, and impact-point logic."
 
 Add if time allows:
 
@@ -124,9 +138,16 @@ Add if time allows:
 
 Advance to App Preview.
 
-### 2:25-2:55 - App Preview: Contribution -> Impact Points
+### 2:35-2:58 - Generated Clean Health App Preview
 
-Show the Clean Health generated PWA preview. Open the Contribute tab, enter a short clean-eating review, and submit it.
+Show the Clean Health generated PWA preview.
+
+Run through the generated app:
+
+- **Home:** show "Saturday clean-health circle" and the reward-available prompt.
+- **App Metadata:** point to Project name: Clean Health, Network: Demo ledger, Reward unit: Impact points, Logic engine: Contribution scoring.
+- **Contribution Logic:** point to Clean-eating review -> 25 impact points.
+- **Contribute tab:** enter a short clean-eating review and submit it.
 
 Show the Rewards or Community tab after submission.
 
@@ -140,7 +161,7 @@ Say:
 
 "Future proof-based verification can be added later, but this demo does not imply live tokens or claimable assets."
 
-### 2:55-3:00 - Close
+### 2:58-3:00 - Close
 
 Say:
 
@@ -152,7 +173,7 @@ End on the deployed app link or the App Preview screen.
 
 - **Does it solve a real, meaningful problem for Ticket 500?** Yes. The opening and Ideation sections explain that Ticket 500 founders need a fast path from rough idea to story, app blueprint, and testable contribution loop.
 - **Is the idea creative or differentiated?** Yes. The script frames the product as a story-led AI generator with built-in contribution mechanics, not a generic template generator.
-- **How well is it built and structured?** The six-step side-nav flow, typed handoffs, server-side agent slices, and Zod-validated outputs are called out in Business Summary, App Generation, and the architecture fallback.
+- **How well is it built and structured?** The six-step side-nav flow, typed handoffs, Clean Health generation run-through, server-side agent slices, and Zod-validated outputs are called out in Business Summary, App Generation, and the architecture fallback.
 - **Is AI used in a meaningful way?** The Brand Story section explains that AI creates structured workflow artifacts that drive downstream generation, not just marketing copy.
 - **Is the idea clearly communicated?** The opening uses one sentence for the problem, one for the demo promise, and the close repeats the core model: story-led app generation with contribution, reward, and iteration.
 
@@ -183,7 +204,3 @@ flowchart LR
 - Say "impact points", not tokens, coins, airdrops, or claimable rewards.
 - Keep smart-contract and ZK references as future verification only.
 - Prioritize the contribution submission and +25 impact-point confirmation if time gets tight.
-
-## Clarifying Question
-
-Should the final live demo rely only on the implemented React app, or should the generated `Design/*/screen.png` wireframes remain part of the fallback presentation if the live app or provider call fails?
