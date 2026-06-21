@@ -7,6 +7,7 @@ import {
 	VoiceStoryRequestSchema,
 } from "../agents/schema";
 import { runVoiceStory } from "../agents/voiceStory";
+import { createEmulatedVoiceStory } from "../agents/voiceStoryEmulation";
 
 /**
  * Shared server entrypoints for the agent workflow.
@@ -25,13 +26,31 @@ function assertProviderConfigured(): void {
 	}
 }
 
+function errorMessage(err: unknown): string {
+	return err instanceof Error ? err.message : "Unknown error";
+}
+
 export async function handleVoiceStory(body: unknown): Promise<VoiceStoryOutput> {
 	const parsed = VoiceStoryRequestSchema.safeParse(body);
 	if (!parsed.success) {
 		throw new Error(parsed.error.issues[0]?.message ?? "Invalid request");
 	}
-	assertProviderConfigured();
-	return runVoiceStory(parsed.data.userInput, parsed.data.researchBrief ?? null);
+	const researchBrief = parsed.data.researchBrief ?? null;
+	const provider = resolveProvider();
+	if (!providerCredentialsPresent(provider)) {
+		console.warn(`[voice-story] Using emulated output; provider "${provider}" has no credentials.`);
+		return createEmulatedVoiceStory(parsed.data.userInput, researchBrief);
+	}
+
+	try {
+		return await runVoiceStory(parsed.data.userInput, researchBrief);
+	} catch (err) {
+		console.warn("[voice-story] Live generation failed; using emulated output.", {
+			provider,
+			error: errorMessage(err),
+		});
+		return createEmulatedVoiceStory(parsed.data.userInput, researchBrief);
+	}
 }
 
 export async function handleResearch(body: unknown): Promise<ResearchBrief> {
