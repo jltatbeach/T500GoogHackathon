@@ -155,7 +155,7 @@ export function App() {
 		: "rounded-[2rem] border border-[#e4e2dd] bg-white/80 p-5 shadow-[0_24px_80px_-48px_rgba(47,53,47,0.35)] backdrop-blur lg:p-8";
 
 	return (
-		<div className={shellClass}>
+		<div className={`${shellClass} ${isDark ? "dark" : ""}`} data-theme={effectiveBackground}>
 			<div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:block">
 				<WorkflowSideNav
 					steps={STEPS}

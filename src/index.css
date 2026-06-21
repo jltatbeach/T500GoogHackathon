@@ -10,3 +10,87 @@ body {
 	margin: 0;
 	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
+
+[data-theme="dark"] {
+	color-scheme: dark;
+}
+
+/*
+ * The visual wireframe pass introduced many literal light-theme tokens in
+ * Tailwind arbitrary classes. These dark-theme contrast guards remap those
+ * literal surfaces/text tokens whenever the app-level background switch is
+ * Dark/System-dark, without changing the canonical light wireframe styling.
+ */
+[data-theme="dark"] [class*="text-[#1b1c19]"],
+[data-theme="dark"] [class*="text-[#3b0a00]"] {
+	color: #f6fbf4 !important;
+}
+
+[data-theme="dark"] [class*="text-[#3f493e]"] {
+	color: #d8e3d3 !important;
+}
+
+[data-theme="dark"] [class*="text-[#707a6e]"],
+[data-theme="dark"] [class*="text-slate-500"] {
+	color: #bfcabb !important;
+}
+
+[data-theme="dark"] .text-refi-700,
+[data-theme="dark"] .text-refi-600 {
+	color: #9ef7a6 !important;
+}
+
+[data-theme="dark"] .text-refi-900 {
+	color: #dfffe4 !important;
+}
+
+[data-theme="dark"] [class~="bg-white"],
+[data-theme="dark"] [class~="bg-white/80"],
+[data-theme="dark"] [class~="bg-white/70"],
+[data-theme="dark"] [class~="bg-white/45"] {
+	background-color: #1a1c1a !important;
+}
+
+[data-theme="dark"] [class*="bg-[#fbf9f4]"],
+[data-theme="dark"] [class*="bg-[#f5f3ee]"] {
+	background-color: #121412 !important;
+}
+
+[data-theme="dark"] [class*="bg-[#f0eee9]"],
+[data-theme="dark"] [class*="bg-[#e4e2dd]"] {
+	background-color: #242824 !important;
+}
+
+[data-theme="dark"] [class*="bg-refi-50"] {
+	background-color: #15391f !important;
+}
+
+[data-theme="dark"] [class*="bg-[#ffdbd1]"] {
+	background-color: #653d1e !important;
+}
+
+[data-theme="dark"] [class*="bg-[#9ef7a6]"] {
+	background-color: #83da8c !important;
+}
+
+[data-theme="dark"] [class*="bg-[#9ef7a6]"][class*="text-refi-"],
+[data-theme="dark"] [class*="bg-[#83da8c]"][class*="text-refi-"] {
+	color: #002108 !important;
+}
+
+[data-theme="dark"] [class*="border-[#e4e2dd]"],
+[data-theme="dark"] [class*="border-[#d8c7a3]"],
+[data-theme="dark"] [class*="border-[#bfcabb]"] {
+	border-color: #3f493e !important;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+	color: #f6fbf4;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+	color: #9aa695 !important;
+}
